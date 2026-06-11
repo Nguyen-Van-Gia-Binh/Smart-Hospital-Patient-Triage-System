@@ -3,6 +3,8 @@ package service;
 import datastructure.bst.IPatientBST;
 import datastructure.bst.PatientBST;
 import model.Patient;
+import util.Acceptable;
+import util.Inputter;
 
 /**
  * Service xu ly nghiep vu lien quan den benh nhan.
@@ -20,6 +22,15 @@ public class PatientService {
      * Dang ky benh nhan moi vao he thong.
      */
     public void registerPatient(Patient patient) {
+        String patientId;
+        do {
+            patientId = Inputter.getString("Nhap id benh nhan: ", Acceptable.PATIENT_ID_VALID);
+            if (patientBST.search(patientId) != null) {
+                System.out.println("[!] ID da ton tai, vui long nhap ID khac.");
+            }
+        } while (patientBST.search(patientId) != null);
+
+        patient.setPatientId(patientId);
         patientBST.insert(patient);
         System.out.println("[+] Da dang ky benh nhan: " + patient.getName()
                 + " (ID: " + patient.getPatientId() + ")");
