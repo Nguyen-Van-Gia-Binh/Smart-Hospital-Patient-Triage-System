@@ -14,8 +14,7 @@ public class PatientBST implements IPatientBST {
 
     @Override
     public void insert(Patient patient) {
-        // TODO: Chen benh nhan vao cay BST theo patientId
-        throw new UnsupportedOperationException("Chua duoc implement - Member 1 lam phan nay");
+        String patientId = patient.getPatientId();
     }
 
     @Override
