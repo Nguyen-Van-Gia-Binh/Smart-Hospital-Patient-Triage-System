@@ -3,7 +3,6 @@ import model.Doctor;
 import service.PatientService;
 import service.TriageService;
 import service.DoctorService;
-import service.ExaminationService;
 import ui.ConsoleUI;
 
 /**

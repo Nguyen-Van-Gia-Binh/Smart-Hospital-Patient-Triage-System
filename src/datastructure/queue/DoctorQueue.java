@@ -11,24 +11,40 @@ import model.Doctor;
  */
 public class DoctorQueue implements IDoctorQueue {
 
-    // TODO: Member 3 implement tat ca cac method ben duoi
+    private DoctorNode front;
+    private DoctorNode rear;
+
+    public DoctorQueue() {
+        this.front = null;
+        this.rear = null;
+    }
 
     @Override
     public void enqueue(Doctor doctor) {
-        // TODO: Them bac si vao cuoi hang doi
-        throw new UnsupportedOperationException("Chua duoc implement - Member 3 lam phan nay");
+        if (isEmpty()) {
+            front = rear = new DoctorNode(doctor);
+        } else {
+            rear.setNext(new DoctorNode(doctor));
+            rear = rear.getNext();
+        }
     }
 
     @Override
     public Doctor dequeue() {
-        // TODO: Lay va xoa bac si o dau hang doi
-        throw new UnsupportedOperationException("Chua duoc implement - Member 3 lam phan nay");
+        if (isEmpty()) {
+            throw new IllegalStateException("Hang doi rong");
+        }
+        Doctor doctor = front.getDoctor();
+        front = front.getNext();
+        if (front == null) {
+            rear = null;
+        }
+        return doctor;
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO: Kiem tra hang doi co rong hay khong
-        throw new UnsupportedOperationException("Chua duoc implement - Member 3 lam phan nay");
+        return front == null;
     }
 
 }

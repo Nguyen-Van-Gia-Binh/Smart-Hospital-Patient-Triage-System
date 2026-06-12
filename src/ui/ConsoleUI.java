@@ -6,6 +6,8 @@ import model.Patient;
 import model.Doctor;
 import service.PatientService;
 import service.TriageService;
+import util.Acceptable;
+import util.Inputter;
 import service.DoctorService;
 import service.ExaminationService;
 
@@ -98,15 +100,21 @@ public class ConsoleUI {
      */
     private void handleRegisterPatient() {
         System.out.println("--- DANG KY BENH NHAN MOI ---");
-        System.out.print("Nhap Ma benh nhan (VD: P001): ");
-        String id = scanner.nextLine().trim();
+        System.out.print("Nhap Ma benh nhan (VD: BNxxx): ");
+        String id;
+        do {
+            id = Inputter.getString("Nhap ma benh nhan: ", Acceptable.PATIENT_ID_VALID);
+            Patient existingPatient = patientService.findPatient(id);
+            if (existingPatient != null) {
+                System.out.println("[!] Ma benh nhan da ton tai. Vui long nhap lai.");
+            }
+        } while (patientService.findPatient(id) != null);
         System.out.print("Nhap Ho ten: ");
-        String name = scanner.nextLine().trim();
+        String name = Inputter.getString("Nhap ho ten: ", Acceptable.FULL_NAME_VALID);
         System.out.print("Nhap Tuoi: ");
-        int age = Integer.parseInt(scanner.nextLine().trim());
+        int age = Integer.parseInt(Inputter.getString("Nhap tuoi: ", "\\d+"));
         System.out.print("Nhap Diem muc do nghiem trong (1-5): ");
-        int severity = Integer.parseInt(scanner.nextLine().trim());
-
+        int severity = Integer.parseInt(Inputter.getString("Nhap diem muc do nghiem trong: ", "[1-5]"));
         Patient patient = new Patient(id, name, age, severity);
         patientService.registerPatient(patient);
         System.out.println();
@@ -117,8 +125,8 @@ public class ConsoleUI {
      */
     private void handleEmergencyAdmission() {
         System.out.println("--- TIEP NHAN CAP CUU ---");
-        System.out.print("Nhap Ma benh nhan (VD: P001): ");
-        String id = scanner.nextLine().trim();
+        System.out.print("Nhap Ma benh nhan (VD: BNxxx): ");
+        String id = Inputter.getString("Nhap ma benh nhan: ", Acceptable.PATIENT_ID_VALID);
         System.out.print("Nhap Ho ten: ");
         String name = scanner.nextLine().trim();
         System.out.print("Nhap Tuoi: ");

@@ -1,5 +1,7 @@
 package datastructure.queue;
 
+import model.Doctor;
+
 /**
  * Node cho hang doi bac si, chua thong tin bac si.
  *
@@ -8,9 +10,28 @@ package datastructure.queue;
  */
 public class DoctorNode {
 
-    // TODO: Member 3 implement
-    // Goi y cac field:
-    // - Doctor data
-    // - DoctorNode next
+    private Doctor doctor;
+    private DoctorNode next;
+
+    public DoctorNode(Doctor doctor) {
+        this.doctor = doctor;
+        this.next = null;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public DoctorNode getNext() {
+        return next;
+    }
+
+    public void setNext(DoctorNode next) {
+        this.next = next;
+    }
 
 }
