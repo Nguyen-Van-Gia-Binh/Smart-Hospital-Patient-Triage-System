@@ -10,19 +10,51 @@ import model.MedicalRecord;
  * Class nay PHAI implement IMedicalHistory.
  */
 public class MedicalHistoryList implements IMedicalHistory {
+    HistoryNode head;
+    HistoryNode tail;
+    int size;
 
-    // TODO: Member 4 implement tat ca cac method ben duoi
+    public MedicalHistoryList() {
+        head = null;
+        tail = null;
+        size = 0;
+    }
 
     @Override
     public void addRecord(MedicalRecord record) {
-        // TODO: Them benh an vao cuoi danh sach lien ket doi
-        throw new UnsupportedOperationException("Chua duoc implement - Member 4 lam phan nay");
+        HistoryNode newNode = new HistoryNode(record);
+        if (tail == null) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+        size++;
     }
 
     @Override
     public void displayRecent(int n) {
-        // TODO: Hien thi n benh an gan nhat (duyet nguoc tu cuoi)
-        throw new UnsupportedOperationException("Chua duoc implement - Member 4 lam phan nay");
+        if (tail == null) {
+            System.out.println("Khong co lich su kham benh.");
+            return;
+        }
+
+        if (n <= 0) {
+            System.out.println("So luong benh an phai lon hon 0.");
+            return;
+        }
+
+        HistoryNode current = tail;
+        int count = 0;
+
+        System.out.println("\n=== 5 Benh An Gan Nhat ===");
+        while (current != null && count < n) {
+            System.out.println(current.getData());
+            current = current.prev;
+            count++;
+        }
     }
 
 }

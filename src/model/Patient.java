@@ -7,6 +7,7 @@ public class Patient {
     private int age;
     private int severityScore; // Diem muc do nghiem trong (1-5, 5 la nang nhat)
 
+    
     // Constructor
     public Patient(String patientId, String name, int age, int severityScore) {
         this.patientId = patientId;
