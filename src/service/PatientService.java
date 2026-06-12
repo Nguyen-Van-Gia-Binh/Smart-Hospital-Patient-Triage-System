@@ -1,21 +1,21 @@
 package service;
 
-import datastructure.bst.IPatientBST;
-import datastructure.bst.PatientBST;
+import datastructure.avlTree.IPatientAVLTree;
+import datastructure.avlTree.PatientAVLTree;
 import model.Patient;
 import util.Acceptable;
 import util.Inputter;
 
 /**
  * Service xu ly nghiep vu lien quan den benh nhan.
- * Su dung IPatientBST de luu tru va tra cuu.
+ * Su dung IPatientAVLTree de luu tru va tra cuu.
  */
 public class PatientService {
 
-    private IPatientBST patientBST;
+    private IPatientAVLTree patientAVLTree;
 
     public PatientService() {
-        this.patientBST = new PatientBST();
+        this.patientAVLTree = new PatientAVLTree();
     }
 
     /**
@@ -25,13 +25,13 @@ public class PatientService {
         String patientId;
         do {
             patientId = Inputter.getString("Nhap id benh nhan: ", Acceptable.PATIENT_ID_VALID);
-            if (patientBST.search(patientId) != null) {
+            if (patientAVLTree.search(patientId) != null) {
                 System.out.println("[!] ID da ton tai, vui long nhap ID khac.");
             }
-        } while (patientBST.search(patientId) != null);
+        } while (patientAVLTree.search(patientId) != null);
 
         patient.setPatientId(patientId);
-        patientBST.insert(patient);
+        patientAVLTree.insert(patient);
         System.out.println("[+] Da dang ky benh nhan: " + patient.getName()
                 + " (ID: " + patient.getPatientId() + ")");
     }
@@ -40,7 +40,7 @@ public class PatientService {
      * Tim kiem benh nhan theo ma benh nhan.
      */
     public Patient findPatient(String patientId) {
-        Patient found = patientBST.search(patientId);
+        Patient found = patientAVLTree.search(patientId);
         if (found == null) {
             System.out.println("[!] Khong tim thay benh nhan voi ID: " + patientId);
         }
@@ -51,7 +51,7 @@ public class PatientService {
      * Xoa benh nhan khoi he thong.
      */
     public boolean removePatient(String patientId) {
-        boolean result = patientBST.delete(patientId);
+        boolean result = patientAVLTree.delete(patientId);
         if (result) {
             System.out.println("[x] Da xoa benh nhan ID: " + patientId);
         } else {

@@ -1,4 +1,4 @@
-package datastructure.bst;
+package datastructure.avlTree;
 
 import model.Patient;
 
@@ -8,16 +8,18 @@ import model.Patient;
  *
  * Member 1 se implement interface nay trong class PatientBST.
  */
-public interface IPatientBST {
+public interface IPatientAVLTree {
 
     /**
      * Chen mot benh nhan vao cay BST.
+     * 
      * @param patient doi tuong Patient can chen
      */
     void insert(Patient patient);
 
     /**
      * Tim kiem benh nhan theo ma benh nhan.
+     * 
      * @param patientId ma benh nhan can tim
      * @return doi tuong Patient neu tim thay, null neu khong
      */
@@ -25,6 +27,7 @@ public interface IPatientBST {
 
     /**
      * Xoa benh nhan khoi cay BST theo ma benh nhan.
+     * 
      * @param patientId ma benh nhan can xoa
      * @return true neu xoa thanh cong, false neu khong tim thay
      */
