@@ -1,23 +1,25 @@
-package datastructure.bst;
+package datastructure.avlTree;
 
 import model.Patient;
 
 /**
- * Node cho cay BST, chua thong tin benh nhan.
+ * Node cho cay AVL, chua thong tin benh nhan.
  *
  * Member 1 se implement class nay.
- * Goi y: moi node chua 1 Patient, va tro den left/right.
+ * Moi node chua 1 Patient, tro den left/right va luu height de can bang.
  */
 public class PatientNode {
 
     private Patient patient;
     private PatientNode left;
     private PatientNode right;
+    private int height;
 
     public PatientNode(Patient patient) {
         this.patient = patient;
         this.left = null;
         this.right = null;
+        this.height = 1;
     }
 
     public Patient getPatient() {
@@ -42,6 +44,14 @@ public class PatientNode {
 
     public void setRight(PatientNode right) {
         this.right = right;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
 }
