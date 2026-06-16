@@ -37,6 +37,37 @@ public class PatientAVLTree implements IPatientAVLTree {
         return balance(node);
     }
 
+    private int height(PatientNode node) {
+        return node == null ? 0 : node.getHeight();
+    }
+
+    private void updateHeight(PatientNode node) {
+        node.setHeight(1 + Math.max(height(node.getLeft()), height(node.getRight())));
+    }
+
+    private int getBalance(PatientNode node) {
+        return node == null ? 0 : height(node.getLeft()) - height(node.getRight());
+    }
+
+    private PatientNode balance(PatientNode node) {
+        int balance = getBalance(node);
+        if (balance > 1 && getBalance(node.getLeft()) >= 0) {
+            return rightRotate(node);
+        }
+        if (balance > 1 && getBalance(node.getLeft()) < 0) {
+            node.setLeft(leftRotate(node.getLeft()));
+            return rightRotate(node);
+        }
+        if (balance < -1 && getBalance(node.getRight()) <= 0) {
+            return leftRotate(node);
+        }
+        if (balance < -1 && getBalance(node.getRight()) > 0) {
+            node.setRight(rightRotate(node.getRight()));
+            return leftRotate(node);
+        }
+        return node;
+    }
+
     @Override
     public Patient search(String patientId) {
         return searchRec(root, patientId);
@@ -117,37 +148,6 @@ public class PatientAVLTree implements IPatientAVLTree {
     private PatientNode findMin(PatientNode node) {
         while (node.getLeft() != null) {
             node = node.getLeft();
-        }
-        return node;
-    }
-
-    private int height(PatientNode node) {
-        return node == null ? 0 : node.getHeight();
-    }
-
-    private void updateHeight(PatientNode node) {
-        node.setHeight(1 + Math.max(height(node.getLeft()), height(node.getRight())));
-    }
-
-    private int getBalance(PatientNode node) {
-        return node == null ? 0 : height(node.getLeft()) - height(node.getRight());
-    }
-
-    private PatientNode balance(PatientNode node) {
-        int balance = getBalance(node);
-        if (balance > 1 && getBalance(node.getLeft()) >= 0) {
-            return rightRotate(node);
-        }
-        if (balance > 1 && getBalance(node.getLeft()) < 0) {
-            node.setLeft(leftRotate(node.getLeft()));
-            return rightRotate(node);
-        }
-        if (balance < -1 && getBalance(node.getRight()) <= 0) {
-            return leftRotate(node);
-        }
-        if (balance < -1 && getBalance(node.getRight()) > 0) {
-            node.setRight(rightRotate(node.getRight()));
-            return leftRotate(node);
         }
         return node;
     }
