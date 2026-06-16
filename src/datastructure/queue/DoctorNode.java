@@ -13,4 +13,27 @@ public class DoctorNode {
     // - Doctor data
     // - DoctorNode next
 
+    public DoctorNode() {
+        private Doctor data;
+        private DoctorNode next;
+    }
+
+    public DoctorNode(Doctor data) {
+        this.data = data;
+        this.next = null;
+    }
+
+    public Doctor getData() {
+        return data;
+    }
+
+    public void setData(Doctor data) {
+        this.data = data;
+    }
+    public DoctorNode getNext() {
+        return next;
+    }
+    public void setNext(DoctorNode next) {
+        this.next = next;
+    }
 }
