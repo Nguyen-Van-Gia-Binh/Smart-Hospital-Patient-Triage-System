@@ -15,20 +15,34 @@ public class DoctorQueue implements IDoctorQueue {
 
     @Override
     public void enqueue(Doctor doctor) {
-        // TODO: Them bac si vao cuoi hang doi
-        throw new UnsupportedOperationException("Chua duoc implement - Member 3 lam phan nay");
+       // TODO: Them bac si vao cuoi hang doi
+        DoctorNode newNode = new DoctorNode(doctor);
+        if (isEmpty()) {
+            front = newNode;
+        } else {
+            rear.setNext(newNode);
+        }
+        rear = newNode;
     }
 
     @Override
     public Doctor dequeue() {
         // TODO: Lay va xoa bac si o dau hang doi
-        throw new UnsupportedOperationException("Chua duoc implement - Member 3 lam phan nay");
+        if(isEmpty()) {
+            return null; //co the nem exception neu hang doi rong
+        }
+        Doctor data = front.getData();
+        front = front.getNext();
+        if (front == null) {
+            rear = null;
+        }
+        return data;
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO: Kiem tra hang doi co rong hay khong
-        throw new UnsupportedOperationException("Chua duoc implement - Member 3 lam phan nay");
+       // TODO: Kiem tra hang doi co rong hay khong
+        return front == null;
     }
 
 }
