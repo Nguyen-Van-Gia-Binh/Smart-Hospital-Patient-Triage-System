@@ -1,5 +1,8 @@
 package model;
 
+import datastructure.dll.IMedicalHistory;
+import datastructure.dll.MedicalHistoryList;
+
 public class Patient {
 
     private String patientId;
@@ -7,13 +10,15 @@ public class Patient {
     private int age;
     private int severityScore; // Diem muc do nghiem trong (1-5, 5 la nang nhat)
 
-    
+    private IMedicalHistory medicalHistory; // Lich su benh an cua benh nhan
     // Constructor
+
     public Patient(String patientId, String name, int age, int severityScore) {
         this.patientId = patientId;
         this.name = name;
         this.age = age;
         this.severityScore = severityScore;
+        this.medicalHistory = new MedicalHistoryList(); // Khoi tao lich su benh an rong
     }
 
     // Getters
@@ -50,6 +55,10 @@ public class Patient {
         this.severityScore = severityScore;
     }
 
+    public IMedicalHistory getMedicalHistory() {
+        return medicalHistory;
+    }
+
     @Override
     public String toString() {
         return "Patient{" +
@@ -57,6 +66,7 @@ public class Patient {
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 ", severityScore=" + severityScore +
+                ", medicalHistory=" + medicalHistory +
                 '}';
     }
 }
