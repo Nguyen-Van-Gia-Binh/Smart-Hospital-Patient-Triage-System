@@ -9,4 +9,6 @@ public interface Acceptable {
 
         return (data != null && data.matches(regex));
     }
+
+    
 }

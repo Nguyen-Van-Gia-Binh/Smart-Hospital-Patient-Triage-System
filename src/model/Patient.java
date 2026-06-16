@@ -9,6 +9,7 @@ public class Patient {
     private String name;
     private int age;
     private int severityScore; // Diem muc do nghiem trong (1-5, 5 la nang nhat)
+
     private IMedicalHistory medicalHistory; // Lich su benh an cua benh nhan
     // Constructor
 
