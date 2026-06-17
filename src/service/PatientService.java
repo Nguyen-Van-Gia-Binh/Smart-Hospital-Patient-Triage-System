@@ -21,28 +21,35 @@ public class PatientService {
     /**
      * Dang ky benh nhan moi vao he thong.
      */
-    public void registerPatient(Patient patient) {
-        String patientId;
-        do {
-            patientId = Inputter.getString("Nhap id benh nhan: ", Acceptable.PATIENT_ID_VALID);
-            if (patientAVLTree.search(patientId) != null) {
-                System.out.println("[!] ID da ton tai, vui long nhap ID khac.");
-            }
-        } while (patientAVLTree.search(patientId) != null);
+    public void registerPatient() {
 
-        patient.setPatientId(patientId);
+        String id;
+        do {
+            id = Inputter.getString("Nhap Ma benh nhan (VD: BNxxx): ", Acceptable.PATIENT_ID_VALID);
+            Patient existingPatient = patientAVLTree.search(id);
+            if (existingPatient != null) {
+                System.out.println("[!] Ma benh nhan da ton tai. Vui long nhap lai.");
+            }
+        } while (patientAVLTree.search(id) != null);
+        String name = Inputter.getString("Nhap ho ten: ", Acceptable.FULL_NAME_VALID);
+        int age = Integer.parseInt(Inputter.getString("Nhap tuoi: ", "\\d+"));
+        int severity = Integer.parseInt(Inputter.getString("Nhap Diem muc do nghiem trong (1-5): ", "[1-5]"));
+        Patient patient = new Patient(id, name, age, severity);
+        patient.setPatientId(id);
         patientAVLTree.insert(patient);
-        System.out.println("[+] Da dang ky benh nhan: " + patient.getName()
+        System.out.println("[+] Da dang ky benh nhan vao he thong (AVL Tree): " + patient.getName()
                 + " (ID: " + patient.getPatientId() + ")");
     }
 
     /**
      * Tim kiem benh nhan theo ma benh nhan.
      */
-    public Patient findPatient(String patientId) {
+    public Patient findPatient() {
+        System.out.print("Nhap Ma benh nhan: ");
+        String patientId = Inputter.getString("Nhap ma benh nhan: ", Acceptable.PATIENT_ID_VALID);
         Patient found = patientAVLTree.search(patientId);
         if (found == null) {
-            System.out.println("[!] Khong tim thay benh nhan voi ID: " + patientId);
+            return null;
         }
         return found;
     }

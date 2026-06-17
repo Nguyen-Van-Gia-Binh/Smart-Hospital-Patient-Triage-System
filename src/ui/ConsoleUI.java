@@ -3,12 +3,10 @@ package ui;
 import java.util.Scanner;
 
 import model.Patient;
-import model.Doctor;
 import service.PatientService;
 import service.TriageService;
 import util.Acceptable;
 import util.Inputter;
-import service.DoctorService;
 import service.ExaminationService;
 
 /**
@@ -20,14 +18,12 @@ public class ConsoleUI {
     private Scanner scanner;
     private PatientService patientService;
     private TriageService triageService;
-    private DoctorService doctorService;
     private ExaminationService examinationService;
 
     public ConsoleUI() {
         this.scanner = new Scanner(System.in);
         this.patientService = new PatientService();
         this.triageService = new TriageService();
-        this.doctorService = new DoctorService();
         this.examinationService = new ExaminationService();
     }
 
@@ -63,12 +59,9 @@ public class ConsoleUI {
                     handleEmergencyAdmission();
                     break;
                 case 3:
-                    handleDoctorAssignment();
-                    break;
-                case 4:
                     handleMedicalExamination();
                     break;
-                case 5:
+                case 4:
                     handleViewPatientHistory();
                     break;
                 case 0:
@@ -88,11 +81,19 @@ public class ConsoleUI {
         System.out.println("===== SMART HOSPITAL =====");
         System.out.println("1. Register Patient");
         System.out.println("2. Emergency Admission");
-        System.out.println("3. Doctor Assignment");
-        System.out.println("4. Medical Examination");
-        System.out.println("5. View Patient History");
+        System.out.println("3. Medical Examination");
+        System.out.println("4. View Patient History");
         System.out.println("0. Exit");
         System.out.println("==========================");
+    }
+
+    // sub-menu sau khi bấm 2 tìm thấy bệnh nhân thì hiện ra submenu này bao gồm xem
+    // lịch sử khám bệnh và nút khám bệnh
+    private void printPatientSubMenu() {
+        System.out.println("=== PATIENT OPTIONS ===");
+        System.out.println("1. View Medical History");
+        System.out.println("2. Proceed to Medical Examination");
+        System.out.println("=======================");
     }
 
     /**
@@ -100,23 +101,7 @@ public class ConsoleUI {
      */
     private void handleRegisterPatient() {
         System.out.println("--- DANG KY BENH NHAN MOI ---");
-        System.out.print("Nhap Ma benh nhan (VD: BNxxx): ");
-        String id;
-        do {
-            id = Inputter.getString("Nhap ma benh nhan: ", Acceptable.PATIENT_ID_VALID);
-            Patient existingPatient = patientService.findPatient(id);
-            if (existingPatient != null) {
-                System.out.println("[!] Ma benh nhan da ton tai. Vui long nhap lai.");
-            }
-        } while (patientService.findPatient(id) != null);
-        System.out.print("Nhap Ho ten: ");
-        String name = Inputter.getString("Nhap ho ten: ", Acceptable.FULL_NAME_VALID);
-        System.out.print("Nhap Tuoi: ");
-        int age = Integer.parseInt(Inputter.getString("Nhap tuoi: ", "\\d+"));
-        System.out.print("Nhap Diem muc do nghiem trong (1-5): ");
-        int severity = Integer.parseInt(Inputter.getString("Nhap diem muc do nghiem trong: ", "[1-5]"));
-        Patient patient = new Patient(id, name, age, severity);
-        patientService.registerPatient(patient);
+        patientService.registerPatient();
         System.out.println();
     }
 
@@ -125,33 +110,28 @@ public class ConsoleUI {
      */
     private void handleEmergencyAdmission() {
         System.out.println("--- TIEP NHAN CAP CUU ---");
-        System.out.print("Nhap Ma benh nhan (VD: BNxxx): ");
-        String id = Inputter.getString("Nhap ma benh nhan: ", Acceptable.PATIENT_ID_VALID);
-        System.out.print("Nhap Ho ten: ");
-        String name = scanner.nextLine().trim();
-        System.out.print("Nhap Tuoi: ");
-        int age = Integer.parseInt(scanner.nextLine().trim());
-        System.out.print("Nhap Diem muc do nghiem trong (1-5): ");
-        int severity = Integer.parseInt(scanner.nextLine().trim());
-
-        Patient patient = new Patient(id, name, age, severity);
-        patientService.registerPatient(patient);
-        triageService.addToEmergencyQueue(patient);
-        System.out.println();
-    }
-
-    /**
-     * Chuc nang 3: Phan cong bac si cho benh nhan.
-     */
-    private void handleDoctorAssignment() {
-        System.out.println("--- PHAN CONG BAC SI ---");
-        if (!triageService.hasWaitingPatients()) {
-            System.out.println("[!] Khong co benh nhan nao dang cho trong hang doi cap cuu.\n");
-            return;
-        }
-        Patient nextPatient = triageService.callNextPatient();
-        if (nextPatient != null) {
-            doctorService.assignDoctor(nextPatient);
+        Patient patient = patientService.findPatient();
+        if (patient != null) {
+            triageService.addToEmergencyQueue(patient);
+            printPatientSubMenu();
+            while (true) {
+                int subChoice = Inputter.getInt("Nhap so 1-2 de chon: ", 1, 2);
+                switch (subChoice) {
+                    case 1:
+                        handleViewPatientHistory();
+                        break;
+                    case 2:
+                        System.out.println("--- KHAM BENH ---");
+                        triageService.callNextPatient();
+                        handleMedicalExamination();
+                        break;
+                    default:
+                        System.out.println("[!] Lua chon khong hop le. Vui long chon 1-2.\n");
+                }
+            }
+        } else {
+            System.out.println(
+                    "[!] Khong tim thay benh nhan trong he thong. Vui long dang ky truoc khi tiep nhan cap cuu.");
         }
         System.out.println();
     }
@@ -173,7 +153,7 @@ public class ConsoleUI {
     }
 
     /**
-     * Chuc nang 5: Xem lich su kham benh.
+     * Chuc nang 4: Xem lich su kham benh.
      */
     private void handleViewPatientHistory() {
         System.out.println("--- XEM LICH SU KHAM BENH ---");
