@@ -13,7 +13,11 @@ import model.Patient;
  */
 public class MaxHeap implements IMaxHeap {
 
-    private  List<Patient> heap;
+    private List<Patient> heap;
+
+    public MaxHeap() {
+        this.heap = new ArrayList<>();
+    }
 
     public MaxHeap(List<Patient> initialHeap) {
         this.heap = new ArrayList<>();
