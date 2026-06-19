@@ -37,24 +37,34 @@ public class MedicalHistoryList implements IMedicalHistory {
     @Override
     public void displayRecent(int n) {
         if (tail == null) {
-            System.out.println("Khong co lich su kham benh.");
+            System.out.println("No medical history available.");
             return;
         }
 
         if (n <= 0) {
-            System.out.println("So luong benh an phai lon hon 0.");
+            System.out.println("Number of records to display must be greater than 0.");
             return;
         }
 
         HistoryNode current = tail;
         int count = 0;
 
-        System.out.println("\n=== 5 Benh An Gan Nhat ===");
+        System.out.println("\n=== Recent Medical Records ===");
         while (current != null && count < n) {
             System.out.println(current.getData());
             current = current.prev;
             count++;
         }
+    }
+
+    @Override
+    public HistoryNode getHead() {
+        return head;
+    }
+
+    @Override
+    public HistoryNode getTail() {
+        return tail;
     }
 
 }
