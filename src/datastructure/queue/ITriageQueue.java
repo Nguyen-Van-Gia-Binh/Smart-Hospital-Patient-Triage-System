@@ -4,57 +4,57 @@ import model.TriageRecord;
 import java.util.List;
 
 /**
- * Interface cho hang doi uu tien (Priority Queue / Sorted Queue).
+ * Giao diện (Interface) cho hàng đợi ưu tiên (Priority Queue / Sorted Queue).
  *
- * Nguyen tac hoat dong:
- *   - Khi them ban ghi moi, tu dong chen vao dung vi tri dua tren priority.
- *   - dequeue() luon lay ra ban ghi o dau hang doi (uu tien cao nhat).
+ * Nguyên tắc hoạt động:
+ *   - Khi thêm hồ sơ phân loại mới, tự động chèn vào đúng vị trí dựa trên mức độ ưu tiên.
+ *   - dequeue() luôn lấy ra hồ sơ ở đầu hàng đợi (có mức độ ưu tiên cao nhất).
  *
- * Cau truc ben trong: Danh sach lien ket don (Singly Linked List) da duoc sap xep.
+ * Cấu trúc bên trong: Danh sách liên kết đơn (Singly Linked List) đã được sắp xếp.
  */
 public interface ITriageQueue {
 
     /**
-     * Them ban ghi triage vao hang doi.
-     * Tu dong chen vao dung vi tri theo thu tu so sanh compareTo.
+     * Thêm một hồ sơ phân loại (TriageRecord) vào hàng đợi.
+     * Tự động chèn vào vị trí thích hợp theo thứ tự so sánh (compareTo).
      *
-     * @param record doi tuong TriageRecord can them vao hang doi
+     * @param record Đối tượng TriageRecord cần thêm vào hàng đợi
      */
     void enqueue(TriageRecord record);
 
     /**
-     * Lay va xoa ban ghi o dau hang doi (uu tien cao nhat).
+     * Lấy và xóa hồ sơ ở đầu hàng đợi (có ưu tiên cao nhất).
      *
-     * @return doi tuong TriageRecord co uu tien cao nhat, null neu hang doi trong
+     * @return Đối tượng TriageRecord có ưu tiên cao nhất, trả về null nếu hàng đợi rỗng
      */
     TriageRecord dequeue();
 
     /**
-     * Xem ban ghi dau hang doi ma khong xoa.
+     * Xem thông tin hồ sơ ở đầu hàng đợi mà không xóa nó.
      *
-     * @return doi tuong TriageRecord co uu tien cao nhat, null neu hang doi trong
+     * @return Đối tượng TriageRecord có ưu tiên cao nhất, trả về null nếu hàng đợi rỗng
      */
     TriageRecord peek();
 
     /**
-     * Kiem tra hang doi co rong hay khong.
+     * Kiểm tra xem hàng đợi có rỗng hay không.
      *
-     * @return true neu hang doi rong, false neu co it nhat 1 ban ghi
+     * @return true nếu hàng đợi rỗng, ngược lại trả về false (có ít nhất 1 hồ sơ)
      */
     boolean isEmpty();
 
     /**
-     * Tra ve so luong ban ghi dang trong hang doi.
+     * Trả về số lượng hồ sơ hiện đang có trong hàng đợi.
      *
-     * @return so luong ban ghi
+     * @return Số lượng hồ sơ
      */
     int size();
 
     /**
-     * Tra ve danh sach ban ghi theo thu tu uu tien (tu cao den thap)
-     * ma khong thay doi hang doi.
+     * Trả về danh sách các hồ sơ theo thứ tự ưu tiên (từ cao đến thấp) 
+     * mà không làm thay đổi nội dung hàng đợi.
      *
-     * @return List<TriageRecord> theo thu tu uu tien hien tai
+     * @return Danh sách List<TriageRecord> theo thứ tự ưu tiên hiện tại
      */
     List<TriageRecord> peekAll();
 

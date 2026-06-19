@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Hàng đợi thường (FIFO Queue) cho các bệnh nhân có mức độ không khẩn cấp (Severity = 1).
- * Sử dụng cấu trúc danh sách liên kết đơn (Singly Linked List) với head và tail.
+ * Hàng đợi thường (FIFO Queue) dành cho các bệnh nhân có mức độ không khẩn cấp (Severity = 1).
+ * Sử dụng cấu trúc danh sách liên kết đơn (Singly Linked List) với con trỏ đầu (head) và cuối (tail).
  */
 public class QueueFIFO {
 
@@ -24,6 +24,9 @@ public class QueueFIFO {
     private Node tail;
     private int size;
 
+    /**
+     * Khởi tạo hàng đợi FIFO rỗng.
+     */
     public QueueFIFO() {
         this.head = null;
         this.tail = null;
@@ -32,6 +35,8 @@ public class QueueFIFO {
 
     /**
      * Thêm bệnh nhân vào cuối hàng đợi.
+     * 
+     * @param patient Đối tượng Patient cần thêm
      */
     public void enqueue(Patient patient) {
         if (patient == null) {
@@ -49,7 +54,9 @@ public class QueueFIFO {
     }
 
     /**
-     * Lấy bệnh nhân ra khỏi đầu hàng đợi (FIFO).
+     * Lấy bệnh nhân ra khỏi đầu hàng đợi theo nguyên tắc vào trước ra trước (FIFO).
+     * 
+     * @return Đối tượng Patient được lấy ra, trả về null nếu hàng đợi rỗng
      */
     public Patient dequeue() {
         if (head == null) {
@@ -65,7 +72,9 @@ public class QueueFIFO {
     }
 
     /**
-     * Xem bệnh nhân ở đầu hàng đợi mà không xóa.
+     * Xem thông tin bệnh nhân ở đầu hàng đợi mà không xóa khỏi hàng đợi.
+     * 
+     * @return Đối tượng Patient đầu hàng đợi, trả về null nếu hàng đợi rỗng
      */
     public Patient peek() {
         if (head == null) {
@@ -75,21 +84,27 @@ public class QueueFIFO {
     }
 
     /**
-     * Kiểm tra hàng đợi có trống không.
+     * Kiểm tra xem hàng đợi có đang trống không.
+     * 
+     * @return true nếu hàng đợi rỗng, ngược lại trả về false
      */
     public boolean isEmpty() {
         return head == null;
     }
 
     /**
-     * Trả về kích thước hàng đợi.
+     * Trả về kích thước (số lượng bệnh nhân) của hàng đợi.
+     * 
+     * @return Kích thước của hàng đợi
      */
     public int size() {
         return size;
     }
 
     /**
-     * Trả về danh sách bệnh nhân trong hàng đợi theo thứ tự từ trước ra sau.
+     * Trả về danh sách bệnh nhân trong hàng đợi theo thứ tự từ người vào trước đến người vào sau.
+     * 
+     * @return Danh sách List<Patient> chứa thông tin các bệnh nhân
      */
     public List<Patient> peekAll() {
         List<Patient> list = new ArrayList<>();

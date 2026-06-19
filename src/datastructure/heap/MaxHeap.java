@@ -6,27 +6,27 @@ import model.TriageRecord;
 import datastructure.queue.ITriageQueue;
 
 /**
- * Max-Heap de uu tien benh nhan theo muc do nghiem trong (TriageRecord).
- *
- * Class nay implement ca IMaxHeap va ITriageQueue.
+ * Lớp cài đặt cấu trúc dữ liệu Max-Heap để ưu tiên bệnh nhân theo mức độ nghiêm trọng.
+ * Bệnh nhân có mức độ nghiêm trọng cao hơn sẽ được phục vụ trước.
+ * Lớp này thực thi (implement) cả hai interface là IMaxHeap và ITriageQueue.
  */
 public class MaxHeap implements IMaxHeap, ITriageQueue {
 
-    /** Mang dong luu tru cac ban ghi triage theo cau truc Max-Heap. */
+    /** Mảng động lưu trữ các hồ sơ phân loại bệnh nhân theo cấu trúc Max-Heap. */
     private List<TriageRecord> heap;
 
     /**
-     * Khoi tao Max-Heap trong.
+     * Khởi tạo một Max-Heap rỗng.
      */
     public MaxHeap() {
         this.heap = new ArrayList<>();
     }
 
     /**
-     * Khoi tao Max-Heap tu mot danh sach ban ghi triage co san.
-     * Su dung thuat toan build-heap (heapify tu duoi len) voi do phuc tap O(n).
+     * Khởi tạo Max-Heap từ một danh sách các hồ sơ phân loại có sẵn.
+     * Sử dụng thuật toán build-heap (heapify từ dưới lên) với độ phức tạp O(n).
      *
-     * @param initialHeap danh sach ban ghi triage ban dau
+     * @param initialHeap Danh sách hồ sơ phân loại ban đầu
      */
     public MaxHeap(List<TriageRecord> initialHeap) {
         this.heap = new ArrayList<>();
@@ -39,7 +39,7 @@ public class MaxHeap implements IMaxHeap, ITriageQueue {
     }
 
     /**
-     * Doi cho 2 phan tu trong heap.
+     * Hoán đổi vị trí hai phần tử trong heap.
      */
     private void swap(int i, int j) {
         if (i == j) {
@@ -51,19 +51,18 @@ public class MaxHeap implements IMaxHeap, ITriageQueue {
     }
 
     /**
-     * So sanh 2 ban ghi triage theo muc do uu tien.
-     * Dung compareTo.
+     * So sánh hai hồ sơ phân loại dựa trên mức độ ưu tiên.
      *
-     * @param a ban ghi thu nhat
-     * @param b ban ghi thu hai
-     * @return true neu a co uu tien cao hon b
+     * @param a Hồ sơ thứ nhất
+     * @param b Hồ sơ thứ hai
+     * @return true nếu hồ sơ 'a' có mức độ ưu tiên cao hơn hồ sơ 'b'
      */
     private boolean hasHigherPriority(TriageRecord a, TriageRecord b) {
         return a.compareTo(b) > 0;
     }
 
     /**
-     * Sift-up: Di chuyen phan tu tai vi tri index len tren
+     * Thao tác Sift-up: Di chuyển phần tử tại vị trí index lên trên để duy trì thuộc tính Max-Heap.
      */
     private void siftUp(int index) {
         while (index > 0) {
@@ -77,7 +76,7 @@ public class MaxHeap implements IMaxHeap, ITriageQueue {
     }
 
     /**
-     * Sift-down (Heapify): Di chuyen phan tu tai vi tri index xuong duoi
+     * Thao tác Sift-down (Heapify): Di chuyển phần tử tại vị trí index xuống dưới để duy trì thuộc tính Max-Heap.
      */
     private void siftDown(int index) {
         int size = heap.size();
@@ -103,8 +102,12 @@ public class MaxHeap implements IMaxHeap, ITriageQueue {
     }
 
     /**
-     * Cung cap cho build-heap tu ben ngoai.
-     * Thuc hien sift-down tren danh sach chi dinh.
+     * Phương thức heapify công khai dành cho việc xây dựng heap từ bên ngoài.
+     * Thực hiện thao tác sift-down trên một danh sách được chỉ định.
+     * 
+     * @param heapList Danh sách cần heapify
+     * @param size Kích thước của heap
+     * @param i Vị trí bắt đầu heapify
      */
     public void heapify(List<TriageRecord> heapList, int size, int i) {
         int largest = i;
@@ -126,7 +129,7 @@ public class MaxHeap implements IMaxHeap, ITriageQueue {
         }
     }
 
-    // ==================== IMaxHeap Methods ====================
+    // ==================== Các phương thức của IMaxHeap ====================
 
     @Override
     public void insert(TriageRecord record) {
@@ -157,7 +160,7 @@ public class MaxHeap implements IMaxHeap, ITriageQueue {
         return maxRecord;
     }
 
-    // ==================== ITriageQueue Methods ====================
+    // ==================== Các phương thức của ITriageQueue ====================
 
     @Override
     public void enqueue(TriageRecord record) {
@@ -177,7 +180,7 @@ public class MaxHeap implements IMaxHeap, ITriageQueue {
         return heap.get(0);
     }
 
-    // ==================== Common Methods ====================
+    // ==================== Các phương thức chung ====================
 
     @Override
     public boolean isEmpty() {
@@ -192,7 +195,7 @@ public class MaxHeap implements IMaxHeap, ITriageQueue {
     @Override
     public List<TriageRecord> peekAll() {
         List<TriageRecord> sorted = new ArrayList<>(heap);
-        sorted.sort((a, b) -> b.compareTo(a)); // sort descending
+        sorted.sort((a, b) -> b.compareTo(a)); // Sắp xếp theo thứ tự giảm dần
         return sorted;
     }
 }

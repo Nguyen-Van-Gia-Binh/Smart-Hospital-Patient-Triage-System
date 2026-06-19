@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package util;
 
 import java.util.Date;
@@ -13,148 +9,145 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 /**
- *
- * @author as
+ * Lớp tiện ích hỗ trợ người dùng nhập liệu từ bàn phím với các kiểm tra hợp lệ.
  */
 public class Inputter {
     private static final Scanner sc = new Scanner(System.in);
 
     /**
-     * Phương thức nhập chuỗi có kiểm tra theo regex
+     * Nhập một chuỗi ký tự và kiểm tra tính hợp lệ dựa trên biểu thức chính quy (regex).
      *
-     * @param msg   Chuỗi hiển thị khi yêu cầu nhập dữ liệu
-     * @param regex Biểu thức chính quy để kiểm tra đầu vào
-     * @return Chuỗi hợp lệ sau khi kiểm tra
+     * @param msg Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
+     * @param regex Biểu thức chính quy dùng để kiểm tra tính hợp lệ
+     * @return Chuỗi dữ liệu hợp lệ được nhập từ bàn phím
      */
     public static String getString(String msg, String regex) {
-        while (true) { // Vòng lặp chạy cho đến khi nhập đúng định dạng
-            System.out.print(msg); // Hiển thị thông báo nhập
-            String input = sc.nextLine().trim(); // Nhập dữ liệu và loại bỏ khoảng trắng đầu/cuối
+        while (true) {
+            System.out.print(msg);
+            String input = sc.nextLine().trim();
 
-            if (input.isEmpty()) { // Kiểm tra nếu chuỗi rỗng
+            if (input.isEmpty()) {
                 System.err.println("Input cannot be empty. Please try again:");
-                continue; // Bắt nhập lại
+                continue;
             }
 
-            if (Acceptable.isValid(input, regex)) { // Kiểm tra chuỗi có đúng định dạng không
-                return input; // Trả về chuỗi hợp lệ
+            if (Acceptable.isValid(input, regex)) {
+                return input;
             } else {
-                System.err.println("Invalid input. Please try again:"); // Báo lỗi và nhập lại
+                System.err.println("Invalid input. Please try again:");
             }
         }
     }
 
     /**
-     * Phương thức nhập số nguyên trong khoảng min - max
+     * Nhập một số nguyên nằm trong một khoảng cho trước (từ min đến max).
      *
-     * @param msg Chuỗi hiển thị khi nhập dữ liệu
-     * @param min Giá trị nhỏ nhất có thể nhập
-     * @param max Giá trị lớn nhất có thể nhập
-     * @return Số nguyên hợp lệ
+     * @param msg Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
+     * @param min Giá trị nhỏ nhất được phép nhập (bao gồm cả min)
+     * @param max Giá trị lớn nhất được phép nhập (bao gồm cả max)
+     * @return Số nguyên hợp lệ nằm trong khoảng [min, max]
      */
     public static int getInt(String msg, int min, int max) {
-        while (true) { // Vòng lặp kiểm tra điều kiện nhập
-            System.out.print(msg); // Hiển thị thông báo nhập
-            String input = sc.nextLine().trim(); // Nhập dữ liệu và loại bỏ khoảng trắng
+        while (true) {
+            System.out.print(msg);
+            String input = sc.nextLine().trim();
 
             try {
-                int result = Integer.parseInt(input); // Chuyển đổi chuỗi thành số nguyên
-                if (result >= min && result <= max) { // Kiểm tra xem số có trong khoảng không
-                    return result; // Trả về số hợp lệ
+                int result = Integer.parseInt(input);
+                if (result >= min && result <= max) {
+                    return result;
                 } else {
                     System.err.println("Please enter a number in range [" + min + " - " + max + "]:");
                 }
-            } catch (NumberFormatException e) { // Bắt lỗi nếu nhập không phải số nguyên
+            } catch (NumberFormatException e) {
                 System.err.println("Invalid number. Please enter an integer:");
             }
         }
     }
 
     /**
-     * Phương thức nhập số thực (double) trong khoảng min - max
+     * Nhập một số thực nằm trong một khoảng cho trước (từ min đến max).
      *
-     * @param msg Chuỗi hiển thị khi nhập dữ liệu
-     * @param min Giá trị nhỏ nhất có thể nhập
-     * @param max Giá trị lớn nhất có thể nhập
-     * @return Số thực hợp lệ
+     * @param msg Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
+     * @param min Giá trị nhỏ nhất được phép nhập (bao gồm cả min)
+     * @param max Giá trị lớn nhất được phép nhập (bao gồm cả max)
+     * @return Số thực hợp lệ nằm trong khoảng [min, max]
      */
     public static double getDouble(String msg, double min, double max) {
-        while (true) { // Vòng lặp kiểm tra điều kiện nhập
-            System.out.print(msg); // Hiển thị thông báo nhập
-            String input = sc.nextLine().trim(); // Nhập dữ liệu và loại bỏ khoảng trắng
+        while (true) {
+            System.out.print(msg);
+            String input = sc.nextLine().trim();
 
             try {
-                double result = Double.parseDouble(input); // Chuyển đổi chuỗi thành số thực
-                if (result >= min && result <= max) { // Kiểm tra xem số có trong khoảng không
-                    return result; // Trả về số hợp lệ
+                double result = Double.parseDouble(input);
+                if (result >= min && result <= max) {
+                    return result;
                 } else {
                     System.err.println("Please enter a number in range [" + min + " - " + max + "]:");
                 }
-            } catch (NumberFormatException e) { // Bắt lỗi nếu nhập không phải số thực
+            } catch (NumberFormatException e) {
                 System.err.println("Invalid number. Please enter a valid number:");
             }
         }
     }
 
     /**
-     * Phương thức nhập vào Y/N (Yes/No)
+     * Nhập giá trị xác nhận Yes/No (Y/N).
      *
-     * @param msg Chuỗi hiển thị khi nhập dữ liệu
-     * @return true nếu nhập "Y", false nếu nhập "N"
+     * @param msg Thông điệp yêu cầu xác nhận hiển thị cho người dùng
+     * @return true nếu người dùng nhập 'Y' hoặc 'y', false nếu nhập 'N' hoặc 'n'
      */
     public static boolean getYesNo(String msg) {
-        while (true) { // Vòng lặp kiểm tra điều kiện nhập
-            System.out.print(msg); // Hiển thị thông báo nhập
-            String result = sc.nextLine().trim(); // Nhập dữ liệu và loại bỏ khoảng trắng
+        while (true) {
+            System.out.print(msg);
+            String result = sc.nextLine().trim();
 
-            if (result.equalsIgnoreCase("Y")) { // Nếu nhập 'Y' hoặc 'y'
-                return true; // Trả về true
-            } else if (result.equalsIgnoreCase("N")) { // Nếu nhập 'N' hoặc 'n'
-                return false; // Trả về false
+            if (result.equalsIgnoreCase("Y")) {
+                return true;
+            } else if (result.equalsIgnoreCase("N")) {
+                return false;
             } else {
-                System.err.println("Invalid input! Please enter 'Y' or 'N'."); // Thông báo lỗi
+                System.err.println("Invalid input! Please enter 'Y' or 'N'.");
             }
         }
     }
 
     /**
-     * Phương thức nhập chuỗi có thể rỗng và kiểm tra theo regex
+     * Nhập một chuỗi ký tự, cho phép để trống, nếu nhập sẽ được kiểm tra theo biểu thức chính quy.
      *
-     * @param msg   Chuỗi hiển thị khi nhập dữ liệu
-     * @param regex Biểu thức chính quy để kiểm tra đầu vào
-     * @return Chuỗi hợp lệ hoặc null nếu nhập rỗng
+     * @param msg Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
+     * @param regex Biểu thức chính quy dùng để kiểm tra tính hợp lệ nếu người dùng có nhập
+     * @return Chuỗi dữ liệu hợp lệ hoặc null nếu người dùng để trống
      */
     public static String getStringEmpty(String msg, String regex) {
-        while (true) { // Vòng lặp kiểm tra điều kiện nhập
-            System.out.print(msg); // Hiển thị thông báo nhập
-            String input = sc.nextLine().trim(); // Nhập dữ liệu và loại bỏ khoảng trắng
+        while (true) {
+            System.out.print(msg);
+            String input = sc.nextLine().trim();
 
-            if (input.isEmpty()) { // Nếu nhập rỗng, trả về null
+            if (input.isEmpty()) {
                 return null;
             }
 
-            if (Acceptable.isValid(input, regex)) { // Kiểm tra chuỗi theo regex
-                return input; // Trả về chuỗi hợp lệ
+            if (Acceptable.isValid(input, regex)) {
+                return input;
             } else {
-                System.err.print("Input not valid. Please re-input: "); // Thông báo lỗi
+                System.err.print("Input not valid. Please re-input: ");
             }
         }
     }
 
     /**
-     * Phương thức nhập ngày tháng theo định dạng dd/MM/yyyy, có thể nhập rỗng
+     * Nhập vào ngày tháng theo định dạng dd/MM/yyyy.
      *
-     * @param msg        Chuỗi hiển thị khi nhập dữ liệu
-     * @param allowBlank Cho phép giá trị rỗng hay không
-     * @return Date hợp lệ hoặc rỗng nếu cho phép
+     * @param msg Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
+     * @param allowBlank Xác định có cho phép người dùng bỏ trống (trả về null) hay không
+     * @return Đối tượng Date hợp lệ hoặc null nếu cho phép bỏ trống
      */
     public static Date getDate(String msg, boolean allowBlank) {
         SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy");
         s.setLenient(false);
-        // Date today = new Date(); // Ngày hiện tại (lúc chạy chương trình)
-        System.out.print(msg + "must be in the future): ");
+        System.out.print(msg + " (dd/MM/yyyy): ");
         while (true) {
-
             try {
                 String input = sc.nextLine().trim();
                 if (allowBlank && input.isEmpty()) {
@@ -165,20 +158,20 @@ public class Inputter {
                     continue;
                 }
                 Date date = s.parse(input);
-                // if (!date.after(today)) {
-                // System.out.print("Date must be in the future! Please enter again
-                // (dd/MM/yyyy): ");
-                // continue;
-                // }
                 return date;
-
             } catch (ParseException e) {
                 System.out.print("Invalid date! Please enter again (dd/MM/yyyy): ");
             }
-
         }
     }
 
+    /**
+     * Nhập vào ngày tháng (LocalDate) theo định dạng dd/MM/yyyy.
+     *
+     * @param msg Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
+     * @param allowBlank Xác định có cho phép người dùng bỏ trống (trả về null) hay không
+     * @return Đối tượng LocalDate hợp lệ hoặc null nếu cho phép bỏ trống
+     */
     public static LocalDate getLocalDate(String msg, boolean allowBlank) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         System.out.print(msg + " (dd/MM/yyyy): ");
@@ -197,14 +190,7 @@ public class Inputter {
 
                 LocalDate date = LocalDate.parse(input, formatter);
 
-                // Nếu muốn bắt buộc phải là ngày tương lai:
-                // if (!date.isAfter(LocalDate.now())) {
-                // System.out.print("Date must be in the future! Enter again: ");
-                // continue;
-                // }
-
                 return date;
-
             } catch (DateTimeParseException e) {
                 System.out.print("Invalid date! Please enter again (dd/MM/yyyy): ");
             }

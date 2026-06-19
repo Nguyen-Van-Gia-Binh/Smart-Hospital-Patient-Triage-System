@@ -3,23 +3,32 @@ package model;
 import datastructure.dll.IMedicalHistory;
 import datastructure.dll.MedicalHistoryList;
 
+/**
+ * Lớp đại diện cho một bệnh nhân trong hệ thống.
+ */
 public class Patient {
 
     private String patientId;
     private String name;
     private int age;
 
-    private IMedicalHistory medicalHistory; // Lich su benh an cua benh nhan
-    // Constructor
+    /** Lịch sử bệnh án của bệnh nhân */
+    private IMedicalHistory medicalHistory; 
 
+    /**
+     * Khởi tạo một đối tượng bệnh nhân mới.
+     *
+     * @param patientId Mã số của bệnh nhân
+     * @param name Tên của bệnh nhân
+     * @param age Tuổi của bệnh nhân
+     */
     public Patient(String patientId, String name, int age) {
         this.patientId = patientId;
         this.name = name;
         this.age = age;
-        this.medicalHistory = new MedicalHistoryList(); // Khoi tao lich su benh an rong
+        this.medicalHistory = new MedicalHistoryList(); // Khởi tạo lịch sử bệnh án rỗng
     }
 
-    // Getters
     public String getPatientId() {
         return patientId;
     }
@@ -32,7 +41,6 @@ public class Patient {
         return age;
     }
 
-    // Setters
     public void setPatientId(String patientId) {
         this.patientId = patientId;
     }

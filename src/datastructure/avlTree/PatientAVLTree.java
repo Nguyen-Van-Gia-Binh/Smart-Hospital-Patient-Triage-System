@@ -3,13 +3,14 @@ package datastructure.avlTree;
 import model.Patient;
 
 /**
- * Cay tim kiem nhi phan tu can bang (AVL Tree) de luu tru va tra cuu benh nhan.
- *
- * Member 1 se implement class nay.
+ * Cây tìm kiếm nhị phân tự cân bằng (AVL Tree) để lưu trữ và tra cứu bệnh nhân.
  */
 public class PatientAVLTree implements IPatientAVLTree {
     private PatientNode root;
 
+    /**
+     * Khởi tạo cây AVL rỗng.
+     */
     public PatientAVLTree() {
         this.root = null;
     }
@@ -94,6 +95,9 @@ public class PatientAVLTree implements IPatientAVLTree {
         return result.deleted;
     }
 
+    /**
+     * Lớp hỗ trợ lưu kết quả của thao tác xóa trên cây AVL.
+     */
     private static class DeleteResult {
         private final PatientNode node;
         private final boolean deleted;

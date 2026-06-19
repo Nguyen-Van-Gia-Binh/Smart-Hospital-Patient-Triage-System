@@ -4,41 +4,45 @@ import model.TriageRecord;
 import java.util.List;
 
 /**
- * Interface cho Max-Heap uu tien benh nhan theo muc do nghiem trong.
- * Benh nhan co severityScore cao nhat se duoc xu ly truoc.
- *
- * Member 2 se implement interface nay trong class MaxHeap.
+ * Giao diện (Interface) cho cấu trúc dữ liệu Max-Heap.
+ * Dùng để ưu tiên bệnh nhân dựa trên mức độ nghiêm trọng (severityScore).
+ * Bệnh nhân có điểm mức độ nghiêm trọng cao nhất sẽ được xử lý trước.
  */
 public interface IMaxHeap {
 
     /**
-     * Them ban ghi triage vao heap.
-     * @param record doi tuong TriageRecord can them
+     * Thêm một hồ sơ phân loại (triage record) vào heap.
+     * 
+     * @param record Đối tượng TriageRecord cần thêm
      */
     void insert(TriageRecord record);
 
     /**
-     * Lay va xoa ban ghi co muc do uu tien cao nhat.
-     * @return doi tuong TriageRecord co uu tien cao nhat, null neu heap rong
+     * Lấy ra và xóa hồ sơ có mức độ ưu tiên cao nhất khỏi heap.
+     * 
+     * @return Đối tượng TriageRecord có ưu tiên cao nhất, trả về null nếu heap rỗng
      */
     TriageRecord extractMax();
 
     /**
-     * Kiem tra heap co rong hay khong.
-     * @return true neu heap rong, false neu khong
+     * Kiểm tra xem heap có đang rỗng hay không.
+     * 
+     * @return true nếu heap rỗng, ngược lại trả về false
      */
     boolean isEmpty();
 
     /**
-     * Tra ve danh sach ban ghi sap xep theo thu tu uu tien (cao den thap)
-     * ma khong xoa khoi heap.
-     * @return List<TriageRecord> theo thu tu uu tien giam dan
+     * Trả về danh sách tất cả các hồ sơ đã được sắp xếp theo thứ tự ưu tiên giảm dần 
+     * (từ cao xuống thấp) mà không làm thay đổi dữ liệu trong heap.
+     * 
+     * @return Danh sách List<TriageRecord> chứa các hồ sơ theo thứ tự ưu tiên
      */
     List<TriageRecord> peekAll();
 
     /**
-     * Tra ve so luong ban ghi dang trong hang doi.
-     * @return so luong ban ghi
+     * Trả về số lượng hồ sơ hiện đang có trong heap.
+     * 
+     * @return Số lượng hồ sơ
      */
     int size();
 

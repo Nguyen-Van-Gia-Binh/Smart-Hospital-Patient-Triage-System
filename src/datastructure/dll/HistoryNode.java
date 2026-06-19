@@ -3,16 +3,19 @@ package datastructure.dll;
 import model.MedicalRecord;
 
 /**
- * Node cho danh sach lien ket doi, chua thong tin benh an.
- *
- * Member 4 se implement class nay.
- * Goi y: moi node chua 1 MedicalRecord, va tro den prev/next.
+ * Node dành cho danh sách liên kết đôi (Doubly Linked List), 
+ * chứa thông tin về một hồ sơ bệnh án (MedicalRecord).
  */
 public class HistoryNode {
     MedicalRecord data;
     HistoryNode prev;
     HistoryNode next;
 
+    /**
+     * Khởi tạo node mới chứa hồ sơ bệnh án.
+     * 
+     * @param data Đối tượng MedicalRecord chứa dữ liệu bệnh án
+     */
     public HistoryNode(MedicalRecord data) {
         this.data = data;
         this.prev = null;
