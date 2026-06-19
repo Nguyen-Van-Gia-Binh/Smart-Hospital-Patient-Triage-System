@@ -1,6 +1,7 @@
 package datastructure.heap;
 
 import model.Patient;
+import java.util.List;
 
 /**
  * Interface cho Max-Heap uu tien benh nhan theo muc do nghiem trong.
@@ -27,5 +28,18 @@ public interface IMaxHeap {
      * @return true neu heap rong, false neu khong
      */
     boolean isEmpty();
+
+    /**
+     * Tra ve danh sach benh nhan sap xep theo thu tu uu tien (cao den thap)
+     * ma khong xoa khoi heap.
+     * @return List<Patient> theo thu tu uu tien giam dan
+     */
+    List<Patient> peekAll();
+
+    /**
+     * Tra ve so luong benh nhan dang trong hang doi.
+     * @return so luong benh nhan
+     */
+    int size();
 
 }

@@ -45,7 +45,7 @@ public class ConsoleUI {
             try {
                 choice = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("[!] Vui long nhap so tu 0-5.\n");
+                System.out.println("[!] Vui long nhap so tu 0-4.\n");
                 continue;
             }
 
@@ -69,7 +69,7 @@ public class ConsoleUI {
                     scanner.close();
                     return;
                 default:
-                    System.out.println("[!] Lua chon khong hop le. Vui long chon 0-5.\n");
+                    System.out.println("[!] Lua chon khong hop le. Vui long chon 0-4.\n");
             }
         }
     }
@@ -87,15 +87,6 @@ public class ConsoleUI {
         System.out.println("==========================");
     }
 
-    // sub-menu sau khi bấm 2 tìm thấy bệnh nhân thì hiện ra submenu này bao gồm xem
-    // lịch sử khám bệnh và nút khám bệnh
-    private void printPatientSubMenu() {
-        System.out.println("=== PATIENT OPTIONS ===");
-        System.out.println("1. View Medical History");
-        System.out.println("2. Proceed to Medical Examination");
-        System.out.println("=======================");
-    }
-
     /**
      * Chuc nang 1: Dang ky benh nhan moi.
      */
@@ -106,41 +97,53 @@ public class ConsoleUI {
     }
 
     /**
-     * Chuc nang 2: Them benh nhan vao hang doi cap cuu.
+     * Chuc nang 2: Tiep nhan cap cuu.
+     *
+     * Logic:
+     *   - Yeu cau nhap Ma benh nhan.
+     *   - Neu ID da ton tai: them ngay vao hang doi, roi hien danh sach thu tu uu tien.
+     *   - Neu ID chua ton tai: hien thi form dang ky (ho ten, tuoi, muc do),
+     *     sau do them vao hang doi, roi hien danh sach thu tu uu tien.
      */
     private void handleEmergencyAdmission() {
         System.out.println("--- TIEP NHAN CAP CUU ---");
-        Patient patient = patientService.findPatient();
+
+        // Buoc 1: Nhap ma benh nhan
+        String patientId = Inputter.getString("Nhap Ma benh nhan (VD: BNxxx): ", Acceptable.PATIENT_ID_VALID);
+
+        // Buoc 2: Tim kiem trong he thong
+        Patient patient = patientService.findPatientById(patientId);
+
         if (patient != null) {
+            // ID da ton tai -> them ngay vao hang doi
+            System.out.println("[✓] Tim thay benh nhan: " + patient.getName()
+                    + " (Tuoi: " + patient.getAge()
+                    + ", Muc do: " + patient.getSeverityScore() + ")");
             triageService.addToEmergencyQueue(patient);
-            printPatientSubMenu();
-            while (true) {
-                int subChoice = Inputter.getInt("Nhap so 1-2 de chon: ", 1, 2);
-                switch (subChoice) {
-                    case 1:
-                        handleViewPatientHistory();
-                        break;
-                    case 2:
-                        System.out.println("--- KHAM BENH ---");
-                        triageService.callNextPatient();
-                        handleMedicalExamination();
-                        break;
-                    default:
-                        System.out.println("[!] Lua chon khong hop le. Vui long chon 1-2.\n");
-                }
-            }
         } else {
-            System.out.println(
-                    "[!] Khong tim thay benh nhan trong he thong. Vui long dang ky truoc khi tiep nhan cap cuu.");
+            // ID chua ton tai -> yeu cau dang ky them thong tin
+            System.out.println("[!] Benh nhan chua co trong he thong. Vui long dang ky them thong tin:");
+            patient = patientService.registerNewPatient(patientId);
+            triageService.addToEmergencyQueue(patient);
         }
+
+        // Buoc 3: Hien thi danh sach hang doi theo thu tu uu tien
+        triageService.displayQueue();
         System.out.println();
     }
 
     /**
-     * Chuc nang 4: Kham benh va luu benh an.
+     * Chuc nang 3: Kham benh - goi benh nhan uu tien cao nhat va luu benh an.
      */
     private void handleMedicalExamination() {
         System.out.println("--- KHAM BENH ---");
+        Patient called = triageService.callNextPatient();
+        if (called == null) {
+            System.out.println("[!] Khong co benh nhan nao trong hang doi can kham.\n");
+            return;
+        }
+        System.out.println("Dang kham benh nhan: " + called.getName()
+                + " (ID: " + called.getPatientId() + ")");
         System.out.print("Nhap Chan doan: ");
         String diagnosis = scanner.nextLine().trim();
         System.out.print("Nhap Don thuoc: ");
@@ -158,7 +161,13 @@ public class ConsoleUI {
     private void handleViewPatientHistory() {
         System.out.println("--- XEM LICH SU KHAM BENH ---");
         System.out.print("Nhap so luong benh an muon xem: ");
-        int n = Integer.parseInt(scanner.nextLine().trim());
+        int n;
+        try {
+            n = Integer.parseInt(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            System.out.println("[!] Vui long nhap so nguyen hop le.\n");
+            return;
+        }
         examinationService.showRecentRecords(n);
         System.out.println();
     }

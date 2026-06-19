@@ -101,4 +101,17 @@ public class MaxHeap implements IMaxHeap {
     public boolean isEmpty() {
         return heap.isEmpty();
     }
+
+    @Override
+    public int size() {
+        return heap.size();
+    }
+
+    @Override
+    public List<Patient> peekAll() {
+        // Tao ban sao va sap xep theo thu tu uu tien giam dan
+        List<Patient> sorted = new ArrayList<>(heap);
+        sorted.sort((a, b) -> b.getSeverityScore() - a.getSeverityScore());
+        return sorted;
+    }
 }
