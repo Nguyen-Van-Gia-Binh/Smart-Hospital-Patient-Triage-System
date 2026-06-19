@@ -8,16 +8,14 @@ public class Patient {
     private String patientId;
     private String name;
     private int age;
-    private int severityScore; // Diem muc do nghiem trong (1-5, 5 la nang nhat)
 
     private IMedicalHistory medicalHistory; // Lich su benh an cua benh nhan
     // Constructor
 
-    public Patient(String patientId, String name, int age, int severityScore) {
+    public Patient(String patientId, String name, int age) {
         this.patientId = patientId;
         this.name = name;
         this.age = age;
-        this.severityScore = severityScore;
         this.medicalHistory = new MedicalHistoryList(); // Khoi tao lich su benh an rong
     }
 
@@ -34,10 +32,6 @@ public class Patient {
         return age;
     }
 
-    public int getSeverityScore() {
-        return severityScore;
-    }
-
     // Setters
     public void setPatientId(String patientId) {
         this.patientId = patientId;
@@ -51,10 +45,6 @@ public class Patient {
         this.age = age;
     }
 
-    public void setSeverityScore(int severityScore) {
-        this.severityScore = severityScore;
-    }
-
     public IMedicalHistory getMedicalHistory() {
         return medicalHistory;
     }
@@ -65,7 +55,6 @@ public class Patient {
                 "patientId='" + patientId + '\'' +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                ", severityScore=" + severityScore +
                 ", medicalHistory=" + medicalHistory +
                 '}';
     }

@@ -1,36 +1,41 @@
 package service;
 
-import datastructure.dll.IMedicalHistory;
-import datastructure.dll.MedicalHistoryList;
+import model.Patient;
 import model.MedicalRecord;
 
 /**
  * Service xu ly nghiep vu kham benh va luu ho so benh an.
- * Su dung IMedicalHistory de luu tru lich su kham.
+ * Su dung IMedicalHistory tuong ung cua tung benh nhan.
  */
 public class ExaminationService {
 
-    private IMedicalHistory medicalHistory;
-
     public ExaminationService() {
-        this.medicalHistory = new MedicalHistoryList();
+        // Constructor khong can khoi tao list chung
     }
 
     /**
-     * Them benh an moi sau khi kham.
+     * Them benh an moi sau khi kham cho mot benh nhan.
      */
-    public void addMedicalRecord(String diagnosis, String prescription, String note) {
+    public void addMedicalRecord(Patient patient, String diagnosis, String prescription, String note) {
+        if (patient == null) {
+            System.out.println("[!] Khong co benh nhan de ghi nhan ket qua.");
+            return;
+        }
         MedicalRecord record = new MedicalRecord(diagnosis, prescription, note);
-        medicalHistory.addRecord(record);
-        System.out.println("[+] Da them benh an: " + diagnosis);
+        patient.getMedicalHistory().addRecord(record);
+        System.out.println("[+] Da them benh an cho benh nhan " + patient.getName() + ": " + diagnosis);
     }
 
     /**
-     * Hien thi n benh an gan nhat.
+     * Hien thi n benh an gan nhat cua mot benh nhan.
      */
-    public void showRecentRecords(int n) {
-        System.out.println("\n--- " + n + " BENH AN GAN NHAT ---");
-        medicalHistory.displayRecent(n);
+    public void showRecentRecords(Patient patient, int n) {
+        if (patient == null) {
+            System.out.println("[!] Benh nhan khong ton tai.");
+            return;
+        }
+        System.out.println("\n--- " + n + " BENH AN GAN NHAT CUA: " + patient.getName() + " (" + patient.getPatientId() + ") ---");
+        patient.getMedicalHistory().displayRecent(n);
     }
 
 }

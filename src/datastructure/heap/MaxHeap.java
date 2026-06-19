@@ -2,74 +2,73 @@ package datastructure.heap;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.Patient;
+import model.TriageRecord;
+import datastructure.queue.ITriageQueue;
 
 /**
- * Max-Heap de uu tien benh nhan theo muc do nghiem trong (severityScore).
- * Benh nhan nang nhat (score cao nhat) se duoc goi kham truoc.
+ * Max-Heap de uu tien benh nhan theo muc do nghiem trong (TriageRecord).
  *
- * Member 2 se implement class nay.
- * Class nay PHAI implement IMaxHeap.
+ * Class nay implement ca IMaxHeap va ITriageQueue.
  */
-public class MaxHeap implements IMaxHeap {
+public class MaxHeap implements IMaxHeap, ITriageQueue {
 
-    private List<Patient> heap;
+    /** Mang dong luu tru cac ban ghi triage theo cau truc Max-Heap. */
+    private List<TriageRecord> heap;
 
+    /**
+     * Khoi tao Max-Heap trong.
+     */
     public MaxHeap() {
         this.heap = new ArrayList<>();
     }
 
-    public MaxHeap(List<Patient> initialHeap) {
+    /**
+     * Khoi tao Max-Heap tu mot danh sach ban ghi triage co san.
+     * Su dung thuat toan build-heap (heapify tu duoi len) voi do phuc tap O(n).
+     *
+     * @param initialHeap danh sach ban ghi triage ban dau
+     */
+    public MaxHeap(List<TriageRecord> initialHeap) {
         this.heap = new ArrayList<>();
         if (initialHeap != null) {
             this.heap.addAll(initialHeap);
             for (int i = this.heap.size() / 2 - 1; i >= 0; i--) {
-                heapify(this.heap, this.heap.size(), i);
+                siftDown(i);
             }
         }
     }
 
+    /**
+     * Doi cho 2 phan tu trong heap.
+     */
     private void swap(int i, int j) {
         if (i == j) {
             return;
         }
-        Patient temp = heap.get(i);
+        TriageRecord temp = heap.get(i);
         heap.set(i, heap.get(j));
         heap.set(j, temp);
     }
 
-    public void heapify(List<Patient> heapList, int size, int i) {
-        int largest = i;
-        int left = 2 * i + 1;
-        int right = 2 * i + 2;
-
-        if (left < size && heapList.get(left).getSeverityScore() > heapList.get(largest).getSeverityScore()) {
-            largest = left;
-        }
-        if (right < size && heapList.get(right).getSeverityScore() > heapList.get(largest).getSeverityScore()) {
-            largest = right;
-        }
-
-        if (largest != i) {
-            Patient temp = heapList.get(i);
-            heapList.set(i, heapList.get(largest));
-            heapList.set(largest, temp);
-            heapify(heapList, size, largest);
-        }
+    /**
+     * So sanh 2 ban ghi triage theo muc do uu tien.
+     * Dung compareTo.
+     *
+     * @param a ban ghi thu nhat
+     * @param b ban ghi thu hai
+     * @return true neu a co uu tien cao hon b
+     */
+    private boolean hasHigherPriority(TriageRecord a, TriageRecord b) {
+        return a.compareTo(b) > 0;
     }
 
-    @Override
-    public void insert(Patient patient) {
-        if (patient == null) {
-            return;
-        }
-
-        heap.add(patient);
-        int index = heap.size() - 1;
-
+    /**
+     * Sift-up: Di chuyen phan tu tai vi tri index len tren
+     */
+    private void siftUp(int index) {
         while (index > 0) {
             int parent = (index - 1) / 2;
-            if (heap.get(index).getSeverityScore() <= heap.get(parent).getSeverityScore()) {
+            if (!hasHigherPriority(heap.get(index), heap.get(parent))) {
                 break;
             }
             swap(index, parent);
@@ -77,25 +76,108 @@ public class MaxHeap implements IMaxHeap {
         }
     }
 
+    /**
+     * Sift-down (Heapify): Di chuyen phan tu tai vi tri index xuong duoi
+     */
+    private void siftDown(int index) {
+        int size = heap.size();
+        while (true) {
+            int largest = index;
+            int left = 2 * index + 1;
+            int right = 2 * index + 2;
+
+            if (left < size && hasHigherPriority(heap.get(left), heap.get(largest))) {
+                largest = left;
+            }
+            if (right < size && hasHigherPriority(heap.get(right), heap.get(largest))) {
+                largest = right;
+            }
+
+            if (largest != index) {
+                swap(index, largest);
+                index = largest;
+            } else {
+                break;
+            }
+        }
+    }
+
+    /**
+     * Cung cap cho build-heap tu ben ngoai.
+     * Thuc hien sift-down tren danh sach chi dinh.
+     */
+    public void heapify(List<TriageRecord> heapList, int size, int i) {
+        int largest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < size && hasHigherPriority(heapList.get(left), heapList.get(largest))) {
+            largest = left;
+        }
+        if (right < size && hasHigherPriority(heapList.get(right), heapList.get(largest))) {
+            largest = right;
+        }
+
+        if (largest != i) {
+            TriageRecord temp = heapList.get(i);
+            heapList.set(i, heapList.get(largest));
+            heapList.set(largest, temp);
+            heapify(heapList, size, largest);
+        }
+    }
+
+    // ==================== IMaxHeap Methods ====================
+
     @Override
-    public Patient extractMax() {
+    public void insert(TriageRecord record) {
+        if (record == null) {
+            return;
+        }
+        heap.add(record);
+        siftUp(heap.size() - 1);
+    }
+
+    @Override
+    public TriageRecord extractMax() {
         if (heap.isEmpty()) {
             return null;
         }
 
-        Patient maxPatient = heap.get(0);
+        TriageRecord maxRecord = heap.get(0);
         int lastIndex = heap.size() - 1;
 
         if (lastIndex > 0) {
             swap(0, lastIndex);
             heap.remove(lastIndex);
-            heapify(heap, heap.size(), 0);
+            siftDown(0);
         } else {
             heap.remove(0);
         }
 
-        return maxPatient;
+        return maxRecord;
     }
+
+    // ==================== ITriageQueue Methods ====================
+
+    @Override
+    public void enqueue(TriageRecord record) {
+        insert(record);
+    }
+
+    @Override
+    public TriageRecord dequeue() {
+        return extractMax();
+    }
+
+    @Override
+    public TriageRecord peek() {
+        if (heap.isEmpty()) {
+            return null;
+        }
+        return heap.get(0);
+    }
+
+    // ==================== Common Methods ====================
 
     @Override
     public boolean isEmpty() {
@@ -108,10 +190,9 @@ public class MaxHeap implements IMaxHeap {
     }
 
     @Override
-    public List<Patient> peekAll() {
-        // Tao ban sao va sap xep theo thu tu uu tien giam dan
-        List<Patient> sorted = new ArrayList<>(heap);
-        sorted.sort((a, b) -> b.getSeverityScore() - a.getSeverityScore());
+    public List<TriageRecord> peekAll() {
+        List<TriageRecord> sorted = new ArrayList<>(heap);
+        sorted.sort((a, b) -> b.compareTo(a)); // sort descending
         return sorted;
     }
 }

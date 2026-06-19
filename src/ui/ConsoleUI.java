@@ -115,17 +115,17 @@ public class ConsoleUI {
         Patient patient = patientService.findPatientById(patientId);
 
         if (patient != null) {
-            // ID da ton tai -> them ngay vao hang doi
             System.out.println("[✓] Tim thay benh nhan: " + patient.getName()
-                    + " (Tuoi: " + patient.getAge()
-                    + ", Muc do: " + patient.getSeverityScore() + ")");
-            triageService.addToEmergencyQueue(patient);
+                    + " (Tuoi: " + patient.getAge() + ")");
         } else {
             // ID chua ton tai -> yeu cau dang ky them thong tin
             System.out.println("[!] Benh nhan chua co trong he thong. Vui long dang ky them thong tin:");
             patient = patientService.registerNewPatient(patientId);
-            triageService.addToEmergencyQueue(patient);
         }
+
+        // Nhap muc do nghiem trong cho lan nhap vien cap cuu nay
+        int severity = Integer.parseInt(Inputter.getString("Nhap Diem muc do nghiem trong (1-5): ", "[1-5]"));
+        triageService.addToEmergencyQueue(patient, severity);
 
         // Buoc 3: Hien thi danh sach hang doi theo thu tu uu tien
         triageService.displayQueue();
@@ -151,7 +151,7 @@ public class ConsoleUI {
         System.out.print("Nhap Ghi chu: ");
         String note = scanner.nextLine().trim();
 
-        examinationService.addMedicalRecord(diagnosis, prescription, note);
+        examinationService.addMedicalRecord(called, diagnosis, prescription, note);
         System.out.println();
     }
 
@@ -160,6 +160,14 @@ public class ConsoleUI {
      */
     private void handleViewPatientHistory() {
         System.out.println("--- XEM LICH SU KHAM BENH ---");
+        System.out.print("Nhap Ma benh nhan can xem lich su (VD: BNxxx): ");
+        String patientId = scanner.nextLine().trim();
+        Patient patient = patientService.findPatientById(patientId);
+        if (patient == null) {
+            System.out.println("[!] Khong tim thay benh nhan trong he thong.\n");
+            return;
+        }
+
         System.out.print("Nhap so luong benh an muon xem: ");
         int n;
         try {
@@ -168,7 +176,7 @@ public class ConsoleUI {
             System.out.println("[!] Vui long nhap so nguyen hop le.\n");
             return;
         }
-        examinationService.showRecentRecords(n);
+        examinationService.showRecentRecords(patient, n);
         System.out.println();
     }
 

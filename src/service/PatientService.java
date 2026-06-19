@@ -61,9 +61,7 @@ public class PatientService {
     private Patient collectPatientInfo(String id) {
         String name = Inputter.getString("Nhap ho ten: ", Acceptable.FULL_NAME_VALID);
         int age = Integer.parseInt(Inputter.getString("Nhap tuoi: ", "\\d+"));
-        int severity = Integer.parseInt(Inputter.getString("Nhap Diem muc do nghiem trong (1-5): ", "[1-5]"));
-        Patient patient = new Patient(id, name, age, severity);
-        patient.setPatientId(id);
+        Patient patient = new Patient(id, name, age);
         return patient;
     }
 

@@ -1,6 +1,6 @@
 package datastructure.heap;
 
-import model.Patient;
+import model.TriageRecord;
 import java.util.List;
 
 /**
@@ -12,16 +12,16 @@ import java.util.List;
 public interface IMaxHeap {
 
     /**
-     * Them benh nhan vao heap.
-     * @param patient doi tuong Patient can them
+     * Them ban ghi triage vao heap.
+     * @param record doi tuong TriageRecord can them
      */
-    void insert(Patient patient);
+    void insert(TriageRecord record);
 
     /**
-     * Lay va xoa benh nhan co muc do uu tien cao nhat (severityScore lon nhat).
-     * @return doi tuong Patient co uu tien cao nhat, null neu heap rong
+     * Lay va xoa ban ghi co muc do uu tien cao nhat.
+     * @return doi tuong TriageRecord co uu tien cao nhat, null neu heap rong
      */
-    Patient extractMax();
+    TriageRecord extractMax();
 
     /**
      * Kiem tra heap co rong hay khong.
@@ -30,15 +30,15 @@ public interface IMaxHeap {
     boolean isEmpty();
 
     /**
-     * Tra ve danh sach benh nhan sap xep theo thu tu uu tien (cao den thap)
+     * Tra ve danh sach ban ghi sap xep theo thu tu uu tien (cao den thap)
      * ma khong xoa khoi heap.
-     * @return List<Patient> theo thu tu uu tien giam dan
+     * @return List<TriageRecord> theo thu tu uu tien giam dan
      */
-    List<Patient> peekAll();
+    List<TriageRecord> peekAll();
 
     /**
-     * Tra ve so luong benh nhan dang trong hang doi.
-     * @return so luong benh nhan
+     * Tra ve so luong ban ghi dang trong hang doi.
+     * @return so luong ban ghi
      */
     int size();
 
