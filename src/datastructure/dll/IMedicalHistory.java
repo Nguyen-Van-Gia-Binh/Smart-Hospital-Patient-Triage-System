@@ -22,4 +22,16 @@ public interface IMedicalHistory {
      */
     void displayRecent(int n);
 
+    /**
+     * Lay node dau cua danh sach (benh an cu nhat).
+     * @return node dau, null neu danh sach trong
+     */
+    HistoryNode getHead();
+
+    /**
+     * Lay node cuoi cua danh sach (benh an moi nhat).
+     * @return node cuoi, null neu danh sach trong
+     */
+    HistoryNode getTail();
+
 }
