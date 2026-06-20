@@ -1,19 +1,27 @@
 package model;
 
+/**
+ * Lớp đại diện cho một hồ sơ bệnh án hoặc một lần khám bệnh của bệnh nhân.
+ */
 public class MedicalRecord {
 
     private String diagnosis;
     private String prescription;
     private String note;
 
-    // Constructor
+    /**
+     * Khởi tạo một hồ sơ khám bệnh mới.
+     *
+     * @param diagnosis Chẩn đoán bệnh
+     * @param prescription Đơn thuốc được kê
+     * @param note Ghi chú thêm từ bác sĩ
+     */
     public MedicalRecord(String diagnosis, String prescription, String note) {
         this.diagnosis = diagnosis;
         this.prescription = prescription;
         this.note = note;
     }
 
-    // Getters
     public String getDiagnosis() {
         return diagnosis;
     }
@@ -26,7 +34,6 @@ public class MedicalRecord {
         return note;
     }
 
-    // Setters
     public void setDiagnosis(String diagnosis) {
         this.diagnosis = diagnosis;
     }

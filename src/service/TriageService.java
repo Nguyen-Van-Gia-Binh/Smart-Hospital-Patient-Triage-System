@@ -8,41 +8,59 @@ import model.TriageRecord;
 import java.util.List;
 
 /**
- * Service xu ly nghiep vu phan luong cap cuu.
+ * Lớp dịch vụ (Service) xử lý các nghiệp vụ phân luồng cấp cứu.
  *
- * Su dung ITriageQueue de quan ly benh nhan.
- * Benh nhan co severityScore cao hon se duoc xep dau hang doi va goi kham truoc.
+ * Sử dụng ITriageQueue để quản lý hàng đợi bệnh nhân cấp cứu.
+ * Bệnh nhân có điểm mức độ nghiêm trọng (severityScore) cao hơn sẽ được xếp lên đầu hàng đợi và được gọi khám trước.
  */
 public class TriageService {
 
     private ITriageQueue triageQueue;
     private QueueFIFO normalQueue;
 
+    /**
+     * Khởi tạo dịch vụ phân luồng với hàng đợi ưu tiên mặc định (PriorityQueue) và hàng đợi thường (FIFO).
+     */
     public TriageService() {
         this.triageQueue = new PriorityQueue();
         this.normalQueue = new QueueFIFO();
     }
 
+    /**
+     * Khởi tạo dịch vụ phân luồng với một cấu trúc hàng đợi cấp cứu tùy chỉnh.
+     * 
+     * @param customQueue Cấu trúc hàng đợi tùy chỉnh implements ITriageQueue
+     */
     public TriageService(ITriageQueue customQueue) {
         this.triageQueue = customQueue;
         this.normalQueue = new QueueFIFO();
     }
 
+    /**
+     * Thay đổi cấu trúc hàng đợi cấp cứu hiện tại.
+     * 
+     * @param queue Cấu trúc hàng đợi mới implements ITriageQueue
+     */
     public void setTriageQueue(ITriageQueue queue) {
         this.triageQueue = queue;
     }
 
+    /**
+     * Lấy danh sách hàng đợi thường (bệnh nhân không khẩn cấp).
+     * 
+     * @return Đối tượng QueueFIFO
+     */
     public QueueFIFO getNormalQueue() {
         return normalQueue;
     }
 
     /**
-     * Enqueues a patient into the appropriate queue.
-     * If severityScore == 1 (Non-Urgent) -> Normal Queue (FIFO).
-     * If severityScore > 1 -> Emergency Queue (Priority Queue / Heap).
+     * Đưa bệnh nhân vào hàng đợi thích hợp dựa trên mức độ nghiêm trọng.
+     * Nếu severityScore == 1 (Không khẩn cấp) -> Đưa vào hàng đợi thường (FIFO).
+     * Nếu severityScore > 1 -> Đưa vào hàng đợi cấp cứu (Priority Queue / Heap).
      *
-     * @param patient Patient to be enqueued
-     * @param severityScore current severity score of the patient
+     * @param patient Bệnh nhân cần đưa vào hàng đợi
+     * @param severityScore Điểm mức độ nghiêm trọng hiện tại của bệnh nhân
      */
     public void addToEmergencyQueue(Patient patient, int severityScore) {
         if (severityScore == 1) {
@@ -58,9 +76,9 @@ public class TriageService {
     }
 
     /**
-     * Call the most critical emergency patient (highest priority).
+     * Gọi bệnh nhân cấp cứu có mức độ nguy kịch cao nhất (đang ở đầu hàng đợi) vào khám.
      *
-     * @return called Patient, null if queue is empty
+     * @return Bệnh nhân được gọi, trả về null nếu hàng đợi cấp cứu rỗng
      */
     public Patient callNextPatient() {
         if (triageQueue.isEmpty()) {
@@ -75,16 +93,16 @@ public class TriageService {
     }
 
     /**
-     * Check if there are any emergency patients waiting.
+     * Kiểm tra xem có bệnh nhân cấp cứu nào đang chờ hay không.
      *
-     * @return true if at least 1 patient is waiting
+     * @return true nếu có ít nhất 1 bệnh nhân cấp cứu đang chờ
      */
     public boolean hasWaitingPatients() {
         return !triageQueue.isEmpty();
     }
 
     /**
-     * Display the current Emergency Queue in priority order.
+     * Hiển thị danh sách hàng đợi cấp cứu hiện tại theo thứ tự ưu tiên.
      */
     public void displayQueue() {
         if (triageQueue.isEmpty()) {
@@ -110,9 +128,9 @@ public class TriageService {
     }
 
     /**
-     * Call the next normal patient (FIFO).
+     * Gọi bệnh nhân tiếp theo trong hàng đợi thường (không khẩn cấp) vào khám theo thứ tự FIFO.
      *
-     * @return called Patient, null if queue is empty
+     * @return Bệnh nhân được gọi, trả về null nếu hàng đợi thường rỗng
      */
     public Patient callNextNormalPatient() {
         if (normalQueue.isEmpty()) {
@@ -126,16 +144,16 @@ public class TriageService {
     }
 
     /**
-     * Check if there are any normal patients waiting.
+     * Kiểm tra xem có bệnh nhân nào trong hàng đợi thường đang chờ hay không.
      *
-     * @return true if at least 1 patient is waiting
+     * @return true nếu có ít nhất 1 bệnh nhân đang chờ
      */
     public boolean hasWaitingNormalPatients() {
         return !normalQueue.isEmpty();
     }
 
     /**
-     * Display the current Normal Queue (FIFO).
+     * Hiển thị danh sách hàng đợi thường hiện tại theo thứ tự FIFO.
      */
     public void displayNormalQueue() {
         if (normalQueue.isEmpty()) {

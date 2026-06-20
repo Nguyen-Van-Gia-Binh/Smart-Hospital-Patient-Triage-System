@@ -3,10 +3,9 @@ package datastructure.avlTree;
 import model.Patient;
 
 /**
- * Node cho cay AVL, chua thong tin benh nhan.
- *
- * Member 1 se implement class nay.
- * Moi node chua 1 Patient, tro den left/right va luu height de can bang.
+ * Node dành cho cây AVL, chứa thông tin của một bệnh nhân.
+ * Mỗi node tham chiếu đến node con trái (left) và node con phải (right), 
+ * đồng thời lưu trữ chiều cao (height) để hỗ trợ thao tác tự cân bằng.
  */
 public class PatientNode {
 
@@ -15,6 +14,11 @@ public class PatientNode {
     private PatientNode right;
     private int height;
 
+    /**
+     * Khởi tạo node mới chứa thông tin bệnh nhân.
+     * 
+     * @param patient Đối tượng bệnh nhân được lưu trong node
+     */
     public PatientNode(Patient patient) {
         this.patient = patient;
         this.left = null;

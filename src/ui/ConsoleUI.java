@@ -10,8 +10,8 @@ import util.Acceptable;
 import util.Inputter;
 
 /**
- * Console user interface for the Smart Hospital system.
- * Supports role-based access: Receptionist, Doctor, and Patient.
+ * Giao diện người dùng dạng console cho hệ thống Smart Hospital.
+ * Hỗ trợ quyền truy cập theo vai trò: Lễ tân (Receptionist), Bác sĩ (Doctor), và Bệnh nhân (Patient).
  */
 public class ConsoleUI {
 
@@ -20,6 +20,9 @@ public class ConsoleUI {
     private TriageService triageService;
     private ExaminationService examinationService;
 
+    /**
+     * Khởi tạo giao diện console và các dịch vụ đi kèm.
+     */
     public ConsoleUI() {
         this.scanner = new Scanner(System.in);
         this.patientService = new PatientService();
@@ -28,7 +31,7 @@ public class ConsoleUI {
     }
 
     /**
-     * Display the main menu to choose a role.
+     * Hiển thị menu chính để người dùng chọn vai trò.
      */
     public void start() {
         while (true) {
@@ -60,7 +63,7 @@ public class ConsoleUI {
     }
 
     /**
-     * 1. RECEPTIONIST INTERFACE
+     * 1. GIAO DIỆN LỄ TÂN (RECEPTIONIST INTERFACE)
      */
     private void handleReceptionistMenu() {
         while (true) {
@@ -86,7 +89,7 @@ public class ConsoleUI {
     }
 
     /**
-     * Register a patient for admission/triage.
+     * Xử lý luồng đăng ký nhập viện và phân luồng (triage) cho bệnh nhân.
      */
     private void handleAdmission() {
         System.out.println("\n--- PATIENT ADMISSION / TRIAGE ---");
@@ -101,12 +104,12 @@ public class ConsoleUI {
             patient = patientService.registerNewPatient(patientId);
         }
 
-        // Display Triage urgency scale
+        // Hiển thị thang điểm phân luồng cấp cứu
         printTriageScale();
         int severity = Integer.parseInt(Inputter.getString("Enter urgency score (1-5): ", "[1-5]"));
         triageService.addToEmergencyQueue(patient, severity);
 
-        // Display appropriate queue
+        // Hiển thị hàng đợi tương ứng sau khi thêm bệnh nhân
         if (severity == 1) {
             triageService.displayNormalQueue();
         } else {
@@ -115,7 +118,7 @@ public class ConsoleUI {
     }
 
     /**
-     * 2. DOCTOR INTERFACE
+     * 2. GIAO DIỆN BÁC SĨ (DOCTOR INTERFACE)
      */
     private void handleDoctorMenu() {
         while (true) {
@@ -140,7 +143,7 @@ public class ConsoleUI {
     }
 
     /**
-     * Perform emergency examination (Priority Queue)
+     * Khám bệnh cấp cứu (sử dụng Priority Queue).
      */
     private void handleEmergencyExam() {
         System.out.println("\n--- EMERGENCY ADMISSION IN PROGRESS ---");
@@ -153,7 +156,7 @@ public class ConsoleUI {
     }
 
     /**
-     * Perform normal examination (Queue FIFO)
+     * Khám bệnh thông thường (sử dụng Queue FIFO).
      */
     private void handleNormalExam() {
         System.out.println("\n--- NORMAL EXAMINATION IN PROGRESS ---");
@@ -166,7 +169,9 @@ public class ConsoleUI {
     }
 
     /**
-     * Medical examination flow for a called patient.
+     * Luồng thực hiện khám bệnh cho bệnh nhân vừa được gọi.
+     * 
+     * @param patient Bệnh nhân đang được khám
      */
     private void examinePatient(Patient patient) {
         while (true) {
@@ -201,7 +206,7 @@ public class ConsoleUI {
 
                 examinationService.addMedicalRecord(patient, diagnosis, prescription, note);
 
-                // Prompt doctor for severity re-evaluation (re-queue if needed)
+                // Hỏi ý kiến bác sĩ xem có cần phân luồng lại hay không
                 System.out.print("\nDoes the patient need emergency triage or to queue again? (y/n): ");
                 String reTriage = scanner.nextLine().trim().toLowerCase();
                 if (reTriage.equals("y") || reTriage.equals("yes")) {
@@ -221,7 +226,7 @@ public class ConsoleUI {
     }
 
     /**
-     * 3. PATIENT INTERFACE
+     * 3. GIAO DIỆN BỆNH NHÂN (PATIENT INTERFACE)
      */
     private void handlePatientMenu() {
         System.out.println("\n--- PATIENT INTERFACE ---");
@@ -259,10 +264,12 @@ public class ConsoleUI {
     }
 
     /**
-     * Smooth interactive traversal of doubly linked list medical records.
+     * Duyệt tương tác qua lịch sử khám bệnh (danh sách liên kết đôi) của bệnh nhân.
+     * 
+     * @param patient Bệnh nhân cần xem lịch sử
      */
     private void navigateMedicalHistory(Patient patient) {
-        HistoryNode current = patient.getMedicalHistory().getTail(); // Default start from newest record (tail)
+        HistoryNode current = patient.getMedicalHistory().getTail(); // Mặc định bắt đầu từ bệnh án mới nhất (tail)
         if (current == null) {
             System.out.println("\n[!] You do not have any medical records yet.");
             return;
@@ -297,21 +304,21 @@ public class ConsoleUI {
     }
 
     /**
-     * Print the standard Triage color scale.
+     * Hiển thị bảng thang điểm phân luồng cấp cứu theo chuẩn y tế.
      */
     public static void printTriageScale() {
         System.out.println("\n=== TRIAGE EMERGENCY SCALE ===");
         System.out.println(" [5] Level 1  Critical (Immediate action required)");
         System.out
                 .println("    - Cardiac/respiratory arrest, airway obstruction, severe respiratory distress, shock...");
-        System.out.println(" [4] Level 2  Very Urgent (Assessment & treatment ≤ 10 mins)");
+        System.out.println(" [4] Level 2  Very Urgent (Assessment & treatment <= 10 mins)");
         System.out.println("    - Airway risk, SpO2 < 90%, circulatory shock, chest pain, acute stroke...");
-        System.out.println(" [3] Level 3  Urgent (Assessment & treatment ≤ 30 mins)");
+        System.out.println(" [3] Level 3  Urgent (Assessment & treatment <= 30 mins)");
         System.out.println(
                 "    - Severe hypertension, moderate breathing difficulty (SpO2 90-95%), fever in immunocompromised...");
-        System.out.println(" [2] Level 4  Less Urgent (Assessment & treatment ≤ 45 mins)");
+        System.out.println(" [2] Level 4  Less Urgent (Assessment & treatment <= 45 mins)");
         System.out.println("    - Mild bleeding, stable foreign body, minor trauma, vomiting/diarrhea...");
-        System.out.println(" [1] Level 5  Non-Urgent (Normal - Assessment & treatment ≤ 60 mins)");
+        System.out.println(" [1] Level 5  Non-Urgent (Normal - Assessment & treatment <= 60 mins)");
         System.out.println("    - Mild pain with no risk signs, minor abrasions, stable chronic illness...");
         System.out.println("================================================");
     }

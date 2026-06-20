@@ -32,9 +32,11 @@ java -Dfile.encoding=UTF-8 -cp bin Main
 ```
 Smart Hospital Patient Triage System/
 ├── docs/
-│   ├── REPORT1_REVISED.md       # Approved Report 1 (Case Study & Design)
-│   ├── CSD201_SE2039_GROUP1_REPOR2.md # Report 2 Draft (Algorithms & Pseudocode)
-│   └── ...
+│   ├── REPORT1_REVISED.md             # Approved Report 1 (Case Study & Design)
+│   ├── CSD201_SE2039_GROUP1_REPOR2.md # Approved Report 2 (Algorithms & Pseudocode)
+│   ├── CSD201_SE2039_GROUP1_REPOR3.md # Approved Report 3 (UML & Experiment Design)
+│   ├── CSD201_SE2039_GROUP1_REPOR4.md # Approved Report 4 (Implementation & IEEE Paper)
+│   └── CSD201_SE2039_GROUP1_REPOR5.md # Approved Report 5 (Final Slides & Reflections)
 ├── src/
 │   ├── Main.java                # Application entry point
 │   ├── model/
@@ -66,7 +68,8 @@ Smart Hospital Patient Triage System/
 │   │   └── ConsoleUI.java       # Role-based English User Interface (Receptionist, Doctor, Patient)
 │   └── util/
 │       ├── Acceptable.java      # Validation patterns
-│       └── Inputter.java        # Helper for console input handling
+│       ├── Inputter.java        # Helper for console input handling
+│       └── BenchmarkRunner.java # Performance benchmarking utility
 ```
 
 ---
@@ -114,18 +117,18 @@ Smart Hospital Patient Triage System/
 ## 🚀 Roadmap / Upcoming Tasks
 
 ### Step 1: Benchmark and Code verification
-* [ ] Create `BenchmarkRunner.java` under `src/util/` or `src/` to automate enqueuing/dequeuing for $N = 100 \dots 10,000$ to compare `PriorityQueue` (Sorted LL) vs `MaxHeap`. Collect execution times and print comparative statistics.
+* [x] Create `BenchmarkRunner.java` under `src/util/` or `src/` to automate enqueuing/dequeuing for $N = 100 \dots 10,000$ to compare `PriorityQueue` (Sorted LL) vs `MaxHeap`. Collect execution times and print comparative statistics.
 
 ### Step 2: Write Report 2 (Algorithms & Code documentation)
-* [ ] Document pseudocode and actual Java implementations for both `PriorityQueue` and `MaxHeap`.
-* [ ] Document AVL Tree and Doubly Linked List implementation details.
+* [x] Document pseudocode and actual Java implementations for both `PriorityQueue` and `MaxHeap`.
+* [x] Document AVL Tree and Doubly Linked List implementation details.
 
 ### Step 3: Write Report 3 (Experiment Design)
-* [ ] Create Use Case and Sequence diagrams.
-* [ ] Establish the Experiment Framework (Hypotheses, Independent/Dependent variables) to answer: *"At what scale does Max Heap out-perform Sorted Linked List for emergency triage?"*
+* [x] Create Use Case and Sequence diagrams.
+* [x] Establish the Experiment Framework (Hypotheses, Independent/Dependent variables) to answer: *"At what scale does Max Heap out-perform Sorted Linked List for emergency triage?"*
 
 ### Step 4: Write Report 4 (Experiments & IEEE Mini-Paper)
-* [ ] Run `BenchmarkRunner`, plot data (using Excel/Python/Matplotlib), and write a formal IEEE-style analysis describing the performance trade-offs (Sorted LL: $O(n)$ enqueue / $O(1)$ dequeue vs Max Heap: $O(\log n)$ enqueue / $O(\log n)$ dequeue).
+* [x] Run `BenchmarkRunner`, plot data (using Excel/Python/Matplotlib), and write a formal IEEE-style analysis describing the performance trade-offs (Sorted LL: $O(n)$ enqueue / $O(1)$ dequeue vs Max Heap: $O(\log n)$ enqueue / $O(\log n)$ dequeue).
 
 ### Step 5: Write Report 5 (Final Slides & Presentation)
-* [ ] Prepare final project slide deck and demo.
+* [x] Prepare final project slide deck and demo.

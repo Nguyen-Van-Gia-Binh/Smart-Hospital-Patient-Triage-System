@@ -3,21 +3,21 @@ package datastructure.queue;
 import model.TriageRecord;
 
 /**
- * Node cua Sorted Queue (danh sach lien ket don da sap xep).
- * Moi node chua mot doi tuong TriageRecord va con tro toi node tiep theo.
+ * Node dành cho Hàng đợi có thứ tự (Sorted Queue) - danh sách liên kết đơn đã sắp xếp.
+ * Mỗi node chứa một đối tượng TriageRecord (hồ sơ phân loại) và một con trỏ tới node tiếp theo.
  */
 public class QueueNode {
 
-    /** Du lieu triage cua node nay. */
+    /** Dữ liệu hồ sơ phân loại của node này. */
     private TriageRecord data;
 
-    /** Con tro toi node tiep theo trong danh sach. */
+    /** Con trỏ trỏ tới node tiếp theo trong danh sách. */
     QueueNode next;
 
     /**
-     * Khoi tao mot QueueNode moi voi du lieu triage.
+     * Khởi tạo một QueueNode mới với dữ liệu hồ sơ phân loại.
      *
-     * @param data doi tuong TriageRecord can luu tru
+     * @param data Đối tượng TriageRecord cần lưu trữ trong node
      */
     public QueueNode(TriageRecord data) {
         this.data = data;
@@ -25,18 +25,18 @@ public class QueueNode {
     }
 
     /**
-     * Lay du lieu triage cua node.
+     * Lấy dữ liệu hồ sơ phân loại đang lưu trong node.
      *
-     * @return doi tuong TriageRecord
+     * @return Đối tượng TriageRecord
      */
     public TriageRecord getData() {
         return data;
     }
 
     /**
-     * Cap nhat du lieu triage cua node.
+     * Cập nhật dữ liệu hồ sơ phân loại cho node.
      *
-     * @param data doi tuong TriageRecord moi
+     * @param data Đối tượng TriageRecord mới
      */
     public void setData(TriageRecord data) {
         this.data = data;

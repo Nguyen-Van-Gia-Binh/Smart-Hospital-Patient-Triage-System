@@ -7,19 +7,22 @@ import util.Acceptable;
 import util.Inputter;
 
 /**
- * Service xu ly nghiep vu lien quan den benh nhan.
- * Su dung IPatientAVLTree de luu tru va tra cuu.
+ * Lớp dịch vụ (Service) xử lý các nghiệp vụ liên quan đến quản lý bệnh nhân.
+ * Sử dụng cấu trúc cây IPatientAVLTree để lưu trữ và tra cứu thông tin nhanh chóng.
  */
 public class PatientService {
 
     private IPatientAVLTree patientAVLTree;
 
+    /**
+     * Khởi tạo dịch vụ quản lý bệnh nhân với một cây AVL rỗng.
+     */
     public PatientService() {
         this.patientAVLTree = new PatientAVLTree();
     }
 
     /**
-     * Registers a new patient into the system (with ID input).
+     * Đăng ký một bệnh nhân mới vào hệ thống (yêu cầu nhập ID từ bàn phím).
      */
     public void registerPatient() {
         String id;
@@ -38,8 +41,11 @@ public class PatientService {
     }
 
     /**
-     * Registers a new patient with a pre-validated ID.
-     * Used in Emergency Admission when the ID doesn't exist yet.
+     * Đăng ký một bệnh nhân mới với mã ID đã được xác thực trước.
+     * Thường được sử dụng trong luồng Cấp cứu khi ID chưa tồn tại trên hệ thống.
+     * 
+     * @param id Mã bệnh nhân đã được xác thực
+     * @return Đối tượng Patient vừa được đăng ký
      */
     public Patient registerNewPatient(String id) {
         Patient patient = collectPatientInfo(id);
@@ -50,7 +56,10 @@ public class PatientService {
     }
 
     /**
-     * Collect patient demographic details from console.
+     * Thu thập thông tin nhân khẩu học của bệnh nhân từ giao diện console.
+     * 
+     * @param id Mã bệnh nhân
+     * @return Đối tượng Patient với các thông tin vừa nhập
      */
     private Patient collectPatientInfo(String id) {
         String name = Inputter.getString("Enter Full Name: ", Acceptable.FULL_NAME_VALID);
@@ -60,7 +69,9 @@ public class PatientService {
     }
 
     /**
-     * Search patient in the system by prompting for ID.
+     * Tìm kiếm thông tin bệnh nhân trong hệ thống bằng cách yêu cầu người dùng nhập mã ID.
+     * 
+     * @return Đối tượng Patient nếu tìm thấy, ngược lại trả về null
      */
     public Patient findPatient() {
         String patientId = Inputter.getString("Enter Patient ID: ", Acceptable.PATIENT_ID_VALID);
@@ -72,14 +83,20 @@ public class PatientService {
     }
 
     /**
-     * Search patient by pre-validated ID.
+     * Tìm kiếm thông tin bệnh nhân thông qua mã ID cung cấp sẵn.
+     * 
+     * @param patientId Mã bệnh nhân cần tìm
+     * @return Đối tượng Patient nếu tìm thấy, ngược lại trả về null
      */
     public Patient findPatientById(String patientId) {
         return patientAVLTree.search(patientId);
     }
 
     /**
-     * Delete patient from system.
+     * Xóa thông tin bệnh nhân khỏi hệ thống.
+     * 
+     * @param patientId Mã bệnh nhân cần xóa
+     * @return true nếu xóa thành công, false nếu không tìm thấy bệnh nhân
      */
     public boolean removePatient(String patientId) {
         boolean result = patientAVLTree.delete(patientId);

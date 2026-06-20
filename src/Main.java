@@ -4,8 +4,8 @@ import service.TriageService;
 import ui.ConsoleUI;
 
 /**
- * Diem vao chinh cua he thong Smart Hospital Patient Triage.
- * Khoi tao mock data va chay ConsoleUI.
+ * Điểm vào (entry point) chính của hệ thống Smart Hospital Patient Triage.
+ * Khởi tạo dữ liệu mẫu (mock data) và chạy giao diện người dùng (ConsoleUI).
  */
 public class Main {
 
@@ -14,9 +14,9 @@ public class Main {
         // System.out.println(" KHOI DONG HE THONG SMART HOSPITAL TRIAGE");
         // System.out.println("==============================================\n");
 
-        // // === KHOI TAO MOCK DATA ===
+        // // === KHỞI TẠO MOCK DATA ===
 
-        // // --- Mock Patients ---
+        // // --- Bệnh nhân mẫu ---
         // Patient patient1 = new Patient("P001", "Pham Minh Tuan", 30, 3);
         // Patient patient2 = new Patient("P002", "Vo Thi Hoa", 45, 5);
         // Patient patient3 = new Patient("P003", "Dang Quoc Viet", 22, 1);
@@ -35,10 +35,9 @@ public class Main {
 
         // System.out.println("\n[Mock Data] Da nap xong du lieu mau vao he thong.");
         // System.out.println("* Luu y: Cac data structure chua duoc implement.");
-        // System.out.println("* Khi cac member hoan thanh, he thong se tu dong hoat
-        // dong.\n");
+        // System.out.println("* Khi cac member hoan thanh, he thong se tu dong hoat dong.\n");
 
-        // === CHAY GIAO DIEN CONSOLE ===
+        // === CHẠY GIAO DIỆN CONSOLE ===
         ConsoleUI consoleUI = new ConsoleUI();
         consoleUI.start();
     }

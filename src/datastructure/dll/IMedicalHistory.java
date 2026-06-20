@@ -3,34 +3,36 @@ package datastructure.dll;
 import model.MedicalRecord;
 
 /**
- * Interface cho danh sach lien ket doi (Doubly Linked List).
- * Luu tru lich su kham benh cua benh nhan.
- *
- * Member 4 se implement interface nay trong class MedicalHistoryList.
+ * Giao diện (Interface) cho danh sách liên kết đôi (Doubly Linked List).
+ * Dùng để lưu trữ và quản lý lịch sử khám bệnh của bệnh nhân.
  */
 public interface IMedicalHistory {
 
     /**
-     * Them mot benh an moi vao cuoi danh sach.
-     * @param record doi tuong MedicalRecord can them
+     * Thêm một hồ sơ bệnh án mới vào cuối danh sách.
+     * 
+     * @param record Đối tượng MedicalRecord cần thêm
      */
     void addRecord(MedicalRecord record);
 
     /**
-     * Hien thi n benh an gan nhat (tu moi den cu).
-     * @param n so luong benh an can hien thi
+     * Hiển thị n hồ sơ bệnh án gần nhất (sắp xếp từ mới nhất đến cũ nhất).
+     * 
+     * @param n Số lượng bệnh án cần hiển thị
      */
     void displayRecent(int n);
 
     /**
-     * Lay node dau cua danh sach (benh an cu nhat).
-     * @return node dau, null neu danh sach trong
+     * Lấy node đầu tiên của danh sách (chứa bệnh án cũ nhất).
+     * 
+     * @return HistoryNode trỏ đến phần tử đầu, trả về null nếu danh sách rỗng
      */
     HistoryNode getHead();
 
     /**
-     * Lay node cuoi cua danh sach (benh an moi nhat).
-     * @return node cuoi, null neu danh sach trong
+     * Lấy node cuối cùng của danh sách (chứa bệnh án mới nhất).
+     * 
+     * @return HistoryNode trỏ đến phần tử cuối, trả về null nếu danh sách rỗng
      */
     HistoryNode getTail();
 

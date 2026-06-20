@@ -3,17 +3,17 @@ package datastructure.dll;
 import model.MedicalRecord;
 
 /**
- * Danh sach lien ket doi (Doubly Linked List) de luu tru lich su kham benh.
- * Cho phep duyet tien/lui qua cac benh an cua benh nhan.
- *
- * Member 4 se implement class nay.
- * Class nay PHAI implement IMedicalHistory.
+ * Cấu trúc dữ liệu Danh sách liên kết đôi (Doubly Linked List) dùng để lưu trữ lịch sử khám bệnh.
+ * Cho phép duyệt tiến hoặc lùi qua các hồ sơ bệnh án của một bệnh nhân.
  */
 public class MedicalHistoryList implements IMedicalHistory {
     HistoryNode head;
     HistoryNode tail;
     int size;
 
+    /**
+     * Khởi tạo danh sách lịch sử bệnh án rỗng.
+     */
     public MedicalHistoryList() {
         head = null;
         tail = null;
