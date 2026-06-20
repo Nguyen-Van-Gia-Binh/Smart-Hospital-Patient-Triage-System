@@ -15,9 +15,10 @@ public class Inputter {
     private static final Scanner sc = new Scanner(System.in);
 
     /**
-     * Nhập một chuỗi ký tự và kiểm tra tính hợp lệ dựa trên biểu thức chính quy (regex).
+     * Nhập một chuỗi ký tự và kiểm tra tính hợp lệ dựa trên biểu thức chính quy
+     * (regex).
      *
-     * @param msg Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
+     * @param msg   Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
      * @param regex Biểu thức chính quy dùng để kiểm tra tính hợp lệ
      * @return Chuỗi dữ liệu hợp lệ được nhập từ bàn phím
      */
@@ -113,10 +114,12 @@ public class Inputter {
     }
 
     /**
-     * Nhập một chuỗi ký tự, cho phép để trống, nếu nhập sẽ được kiểm tra theo biểu thức chính quy.
+     * Nhập một chuỗi ký tự, cho phép để trống, nếu nhập sẽ được kiểm tra theo biểu
+     * thức chính quy.
      *
-     * @param msg Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
-     * @param regex Biểu thức chính quy dùng để kiểm tra tính hợp lệ nếu người dùng có nhập
+     * @param msg   Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
+     * @param regex Biểu thức chính quy dùng để kiểm tra tính hợp lệ nếu người dùng
+     *              có nhập
      * @return Chuỗi dữ liệu hợp lệ hoặc null nếu người dùng để trống
      */
     public static String getStringEmpty(String msg, String regex) {
@@ -139,8 +142,9 @@ public class Inputter {
     /**
      * Nhập vào ngày tháng theo định dạng dd/MM/yyyy.
      *
-     * @param msg Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
-     * @param allowBlank Xác định có cho phép người dùng bỏ trống (trả về null) hay không
+     * @param msg        Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
+     * @param allowBlank Xác định có cho phép người dùng bỏ trống (trả về null) hay
+     *                   không
      * @return Đối tượng Date hợp lệ hoặc null nếu cho phép bỏ trống
      */
     public static Date getDate(String msg, boolean allowBlank) {
@@ -168,8 +172,9 @@ public class Inputter {
     /**
      * Nhập vào ngày tháng (LocalDate) theo định dạng dd/MM/yyyy.
      *
-     * @param msg Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
-     * @param allowBlank Xác định có cho phép người dùng bỏ trống (trả về null) hay không
+     * @param msg        Thông điệp yêu cầu nhập dữ liệu hiển thị cho người dùng
+     * @param allowBlank Xác định có cho phép người dùng bỏ trống (trả về null) hay
+     *                   không
      * @return Đối tượng LocalDate hợp lệ hoặc null nếu cho phép bỏ trống
      */
     public static LocalDate getLocalDate(String msg, boolean allowBlank) {
